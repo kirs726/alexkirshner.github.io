@@ -400,22 +400,21 @@ footer {
   right: 1rem;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
   box-shadow: var(--shadow-card);
-  transition: background var(--transition-fast), transform var(--transition-fast), opacity var(--transition-base);
-  padding: 0;
+  transition: background var(--transition-fast), color var(--transition-fast), opacity var(--transition-base);
+  padding: 0.5rem 0.75rem;
 }
 
 .theme-toggle:hover {
-  transform: scale(1.1);
   background: var(--color-bg);
+  color: var(--color-text-secondary);
 }
 
 .theme-toggle.hidden {
@@ -423,46 +422,30 @@ footer {
   pointer-events: none;
 }
 
-.theme-toggle .icon-sun,
-.theme-toggle .icon-moon {
+.theme-toggle .label-dark,
+.theme-toggle .label-light {
   display: none;
 }
 
-/* Show sun in dark mode (to switch to light) */
-:root[data-theme="dark"] .theme-toggle .icon-sun,
-:root:not([data-theme="light"]) .theme-toggle .icon-sun {
-  display: block;
+/* Show "Dark Mode" in light mode (to switch to dark) */
+:root[data-theme="light"] .theme-toggle .label-dark {
+  display: inline;
 }
 
-:root[data-theme="dark"] .theme-toggle .icon-moon,
-:root:not([data-theme="light"]) .theme-toggle .icon-moon {
-  display: none;
+/* Show "Light Mode" in dark mode (to switch to light) */
+:root[data-theme="dark"] .theme-toggle .label-light {
+  display: inline;
 }
 
-/* Show moon in light mode (to switch to dark) */
-:root[data-theme="light"] .theme-toggle .icon-moon {
-  display: block;
-}
-
-:root[data-theme="light"] .theme-toggle .icon-sun {
-  display: none;
-}
-
-/* Default (no data-theme set, light mode system or default) */
+/* Default (no data-theme set) - follow system preference */
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme]) .theme-toggle .icon-moon {
-    display: block;
-  }
-  :root:not([data-theme]) .theme-toggle .icon-sun {
-    display: none;
+  :root:not([data-theme]) .theme-toggle .label-dark {
+    display: inline;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .theme-toggle .icon-sun {
-    display: block;
-  }
-  :root:not([data-theme]) .theme-toggle .icon-moon {
-    display: none;
+  :root:not([data-theme]) .theme-toggle .label-light {
+    display: inline;
   }
 }
