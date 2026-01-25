@@ -316,6 +316,22 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+/* Math challenge field */
+.math-challenge {
+  max-width: 280px;
+}
+
+.math-challenge label {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.math-challenge input {
+  max-width: 100px;
+}
+
 /* Footer */
 footer {
   margin-top: 3.5rem;

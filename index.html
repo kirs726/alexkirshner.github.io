@@ -134,6 +134,13 @@
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="5" required minlength="10" maxlength="5000"></textarea>
         </div>
+        <!-- Math challenge - bots can't solve this -->
+        <div class="form-group math-challenge">
+          <label for="math-answer">Quick check: <span id="math-question"></span></label>
+          <input type="text" id="math-answer" name="math_answer" required autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+        </div>
+        <input type="hidden" id="math-expected" value="">
+        <input type="hidden" id="interactions" name="_interactions" value="0">
         <button type="submit" id="submit-btn">Send Message</button>
         <p id="form-error" class="form-error" role="alert"></p>
       </form>
@@ -199,6 +206,10 @@
       const formTime = document.getElementById('form-time');
       const errorEl = document.getElementById('form-error');
       const submitBtn = document.getElementById('submit-btn');
+      const mathQuestion = document.getElementById('math-question');
+      const mathExpected = document.getElementById('math-expected');
+      const mathAnswer = document.getElementById('math-answer');
+      const interactionsField = document.getElementById('interactions');
 
       // Record when form was loaded (bots submit instantly)
       const loadTime = Date.now();
@@ -207,14 +218,61 @@
       // Set JS challenge - proves JavaScript is running (many bots don't execute JS)
       jsCheck.value = '';
 
-      // Spam patterns to check against
+      // Generate math challenge
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      const operators = ['+', '-'];
+      const op = operators[Math.floor(Math.random() * operators.length)];
+      const answer = op === '+' ? num1 + num2 : num1 - num2;
+      mathQuestion.textContent = 'What is ' + num1 + ' ' + op + ' ' + num2 + '?';
+      mathExpected.value = answer.toString();
+
+      // Track user interactions (bots don't interact like humans)
+      let interactionCount = 0;
+      const fieldsInteracted = new Set();
+
+      function trackInteraction(fieldId) {
+        if (!fieldsInteracted.has(fieldId)) {
+          fieldsInteracted.add(fieldId);
+          interactionCount++;
+          interactionsField.value = interactionCount.toString();
+        }
+      }
+
+      ['name', 'email', 'message', 'math-answer'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('focus', function() { trackInteraction(id); });
+          el.addEventListener('input', function() { trackInteraction(id); });
+        }
+      });
+
+      // Spam patterns to check against (expanded)
       const spamPatterns = [
-        /\b(viagra|cialis|casino|lottery|winner|cryptocurrency|bitcoin|crypto\s*trading)\b/i,
-        /\b(click here|act now|limited time|free money|make money fast)\b/i,
-        /\b(SEO|backlink|link building|guest post|sponsored post)\b/i,
+        /\b(viagra|cialis|casino|lottery|winner|cryptocurrency|bitcoin|crypto\s*trading|forex|investment opportunity)\b/i,
+        /\b(click here|act now|limited time|free money|make money fast|earn \$|double your)\b/i,
+        /\b(SEO|backlink|link building|guest post|sponsored post|link exchange|web traffic)\b/i,
+        /\b(dear sir|dear madam|dear friend|dear website owner|dear webmaster)\b/i,
+        /\b(nigerian|inheritance|beneficiary|next of kin|offshore account|wire transfer)\b/i,
+        /\b(weight loss|diet pill|enlargement|pharmacy|prescription|medication without)\b/i,
+        /\b(work from home|be your own boss|financial freedom|passive income|mlm|multi-level)\b/i,
+        /\b(adult|xxx|porn|webcam|dating site|singles in your area|meet hot)\b/i,
+        /\b(congratulations|you have been selected|you have won|claim your prize|act now)\b/i,
+        /\b(instagram followers|buy followers|social media marketing|grow your audience)\b/i,
         /<[^>]*>/,  // HTML tags
         /\[url=/i,  // BBCode links
         /(http[s]?:\/\/.*){3,}/i,  // Multiple URLs
+        /(.)\1{4,}/,  // Repeated characters (aaaaa, !!!!!!)
+        /\b[A-Z]{5,}\b/,  // ALL CAPS words (5+ letters)
+      ];
+
+      // Disposable/temporary email domains to block
+      const disposableDomains = [
+        'tempmail', 'guerrillamail', '10minutemail', 'throwaway', 'mailinator',
+        'fakeinbox', 'tempinbox', 'disposable', 'trashmail', 'sharklasers',
+        'guerrillamail', 'maildrop', 'mintemail', 'temp-mail', 'emailondeck',
+        'getnada', 'mohmal', 'yopmail', 'dispostable', 'mailnesia', 'spamgourmet',
+        'getairmail', 'discard.email', 'tempr.email', 'fakemailgenerator'
       ];
 
       function showError(message) {
@@ -229,6 +287,14 @@
         errorEl.style.display = 'none';
       }
 
+      function silentFail() {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        setTimeout(function() {
+          submitBtn.textContent = 'Message Sent!';
+        }, 1500);
+      }
+
       form.addEventListener('submit', function(e) {
         clearError();
 
@@ -238,27 +304,24 @@
 
         if (website || phone) {
           e.preventDefault();
-          // Silently fail for bots - don't give them feedback
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Sending...';
-          setTimeout(function() {
-            submitBtn.textContent = 'Message Sent!';
-          }, 1500);
+          silentFail();
           return;
         }
 
-        // Check timing - humans take at least 3 seconds to fill a form
+        // Check timing - humans take at least 5 seconds to fill a form
         const submitTime = Date.now();
         const elapsed = submitTime - loadTime;
 
-        if (elapsed < 3000) {
+        if (elapsed < 5000) {
           e.preventDefault();
-          // Silently fail for bots
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Sending...';
-          setTimeout(function() {
-            submitBtn.textContent = 'Message Sent!';
-          }, 1500);
+          silentFail();
+          return;
+        }
+
+        // Check that user interacted with at least 3 fields (bots often don't trigger events)
+        if (interactionCount < 3) {
+          e.preventDefault();
+          silentFail();
           return;
         }
 
@@ -266,11 +329,27 @@
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const message = document.getElementById('message').value.trim();
+        const userAnswer = mathAnswer.value.trim();
 
-        // Validate name
+        // Validate math challenge
+        if (userAnswer !== mathExpected.value) {
+          e.preventDefault();
+          showError('Please check your math answer.');
+          return;
+        }
+
+        // Validate name (must have at least one space for full name, or be 2+ chars)
         if (name.length < 2) {
           e.preventDefault();
           showError('Please enter your name.');
+          return;
+        }
+
+        // Check for gibberish names (consonant clusters without vowels)
+        const vowelRatio = (name.match(/[aeiou]/gi) || []).length / name.replace(/\s/g, '').length;
+        if (name.length > 3 && vowelRatio < 0.1) {
+          e.preventDefault();
+          silentFail();
           return;
         }
 
@@ -282,6 +361,16 @@
           return;
         }
 
+        // Check for disposable email domains
+        const emailDomain = email.split('@')[1].toLowerCase();
+        for (const domain of disposableDomains) {
+          if (emailDomain.includes(domain)) {
+            e.preventDefault();
+            showError('Please use a permanent email address.');
+            return;
+          }
+        }
+
         // Validate message
         if (message.length < 10) {
           e.preventDefault();
@@ -290,16 +379,11 @@
         }
 
         // Check for spam patterns
-        const fullContent = (name + ' ' + message).toLowerCase();
+        const fullContent = (name + ' ' + message);
         for (const pattern of spamPatterns) {
           if (pattern.test(fullContent)) {
             e.preventDefault();
-            // Silently fail for spam - don't educate spammers
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            setTimeout(function() {
-              submitBtn.textContent = 'Message Sent!';
-            }, 1500);
+            silentFail();
             return;
           }
         }
@@ -309,6 +393,15 @@
         if (urlCount > 2) {
           e.preventDefault();
           showError('Please limit links in your message.');
+          return;
+        }
+
+        // Check message isn't mostly uppercase (spam indicator)
+        const upperCount = (message.match(/[A-Z]/g) || []).length;
+        const letterCount = (message.match(/[a-zA-Z]/g) || []).length;
+        if (letterCount > 20 && upperCount / letterCount > 0.7) {
+          e.preventDefault();
+          silentFail();
           return;
         }
 
