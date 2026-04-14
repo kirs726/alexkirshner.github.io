@@ -228,6 +228,14 @@ h2 {
   color: var(--color-text-muted);
 }
 
+.signup-success {
+  display: none;
+  margin: 1rem 0 0 0;
+  font-size: 1.05rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
 /* Lists */
 ul {
   list-style: none;

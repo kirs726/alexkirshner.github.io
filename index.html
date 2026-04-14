@@ -69,6 +69,7 @@
           <button type="submit" id="signup-btn">Submit</button>
         </div>
       </form>
+      <p class="signup-success" id="signup-success">Thanks for signing up!</p>
     </section>
 
     <section id="about">
@@ -225,6 +226,13 @@
       const mathExpected = document.getElementById('math-expected');
       const mathAnswer = document.getElementById('math-answer');
       const interactionsField = document.getElementById('interactions');
+
+      // Show confirmation if returning from signup
+      if (new URLSearchParams(window.location.search).get('signup') === 'success') {
+        document.getElementById('signup-success').style.display = 'block';
+        document.querySelector('.signup-form').style.display = 'none';
+        history.replaceState(null, '', window.location.pathname);
+      }
 
       // Stamp signup form with page-load time (for post-hoc bot detection)
       const signupTimeField = document.getElementById('signup-time');
