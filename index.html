@@ -227,12 +227,22 @@
       const mathAnswer = document.getElementById('math-answer');
       const interactionsField = document.getElementById('interactions');
 
-      // Show confirmation if returning from signup
-      if (new URLSearchParams(window.location.search).get('signup') === 'success') {
-        document.getElementById('signup-success').style.display = 'block';
-        document.querySelector('.signup-form').style.display = 'none';
-        history.replaceState(null, '', window.location.pathname);
-      }
+      // Handle signup form via fetch (no page navigation)
+      var signupForm = document.querySelector('.signup-form');
+      signupForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('signup-btn');
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        fetch(signupForm.action, {
+          method: 'POST',
+          body: new FormData(signupForm),
+          mode: 'no-cors'
+        }).then(function() {
+          signupForm.style.display = 'none';
+          document.getElementById('signup-success').style.display = 'block';
+        });
+      });
 
       // Stamp signup form with page-load time (for post-hoc bot detection)
       const signupTimeField = document.getElementById('signup-time');
