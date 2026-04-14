@@ -52,8 +52,27 @@
       </div>
     </header>
 
+    <section id="signup" class="highlight-section">
+      <h2>Emails!</h2>
+      <p>Want to keep up with what I'm doing next? Leave your email here, and I'll make sure you're the first to know. Thanks to everyone who listened to Hang Up and Listen!</p>
+      <form class="signup-form" action="https://script.google.com/macros/s/AKfycbw6O_5_LhQdZd2ifO5r9Zxi_sZpFjf0baIATJ3SVUm9IhBPQduUEh9BjXMjOurS1tqh-g/exec" method="POST">
+        <!-- Honeypot: bots fill this, humans never see it -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="form-guard" aria-hidden="true">
+          <label for="signup-url">Website</label>
+          <input type="text" id="signup-url" name="url" tabindex="-1" autocomplete="off">
+        </div>
+        <!-- Hidden timestamp for post-hoc bot detection -->
+        <input type="hidden" id="signup-time" name="signup_timestamp" value="">
+        <div class="signup-row">
+          <input type="email" name="email" placeholder="Email address" required aria-label="Email address">
+          <button type="submit" id="signup-btn">Submit</button>
+        </div>
+      </form>
+    </section>
+
     <section id="about">
-      <p>I'm a writer and podcast host living in Los Angeles. My writing appears regularly in <em>Slate</em>, <em>The Athletic</em>, <em>The Ringer</em>, and a wide range of other publications. I am co-founder and co-host of Split Zone Duo, a national college football podcast. I also host <em>Slate</em>'s sports program, Hang Up and Listen. Below, you can find a small sample of my work, as well as a contact form in case you'd like to get in touch. Thanks for stopping by.</p>
+      <p>I'm a writer and podcast host living in Los Angeles. My writing appears regularly in <em>Slate</em>, <em>The Athletic</em>, <em>The Ringer</em>, and a wide range of other publications. I am co-founder and co-host of Split Zone Duo, a national college football podcast. At the bottom of this page, you can find a small sample of my work, as well as a feedback form in case you'd like to get in touch. Thanks for stopping by.</p>
     </section>
 
     <section id="podcasts" class="highlight-section">
@@ -62,10 +81,6 @@
         <li>
           <a href="https://splitzoneduo.com"><strong>Split Zone Duo</strong></a>
           <p class="blurb">An independent college football podcast, entertaining and informing thousands of paid subscribers several times each week. Available wherever you get podcasts or via Substack.</p>
-        </li>
-        <li>
-          <a href="https://slate.com/podcasts/hang-up-and-listen"><strong>Hang Up and Listen</strong></a>
-          <p class="blurb">Slate's Monday morning sports podcast. An hour of discussing the most interesting sports stories of the day, which often intersect with politics, tech, or entertainment.</p>
         </li>
       </ul>
     </section>
@@ -210,6 +225,12 @@
       const mathExpected = document.getElementById('math-expected');
       const mathAnswer = document.getElementById('math-answer');
       const interactionsField = document.getElementById('interactions');
+
+      // Stamp signup form with page-load time (for post-hoc bot detection)
+      const signupTimeField = document.getElementById('signup-time');
+      if (signupTimeField) {
+        signupTimeField.value = new Date().toISOString();
+      }
 
       // Record when form was loaded (bots submit instantly)
       const loadTime = Date.now();
