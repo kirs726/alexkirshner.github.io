@@ -77,6 +77,7 @@
       const result = await response.json();
       if (result.ok) {
         form.querySelector('.signup-row').hidden = true;
+        form.querySelector('label[for="signup-email"]').hidden = true;
         document.querySelector('#turnstile-widget').hidden = true;
         status.classList.add('is-success');
         status.textContent = result.reason === 'already_subscribed' ? 'You’re already on the list. Thanks!' : 'Thanks! You’re on the list.';

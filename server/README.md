@@ -16,6 +16,12 @@ This version keeps the existing Google Sheet and its three columns: Timestamp, E
 
 The page submits with `fetch` (form-encoded, plus `format=json`) and shows the result inline; the endpoint answers with `ContentService` JSON `{ok, reason}`. Apps Script adds `Access-Control-Allow-Origin: *` only to `ContentService` output, so the JSON path must never switch to `HtmlService`, or the browser will block the response. Without JavaScript the form falls back to normal navigation and the HTML result page. Failure reasons (`missing_secret`, `sheet_not_found`, `verify_failed:<cloudflare codes>`, `wrong_hostname`, `exception:<message>`, and so on) are shown in small text under the form to make misconfiguration diagnosable. Turnstile runs only when signup is configured. Localhost is not allowed in the production handler; use a separate test deployment and Turnstile test keys if integration testing locally.
 
+## Current state (2026-09-07)
+
+Live and verified end to end. The sheet is "Alex Kirshner email list" (tab `Sheet1`; a `Removed` tab holds rows moved out by `cleanupList`). One active deployment, described "Email list", ID beginning `AKfycbzcJCCF`; the four earlier unprotected deployments are archived.
+
+Gotcha hit during setup: after adding `UrlFetchApp` the editor never prompted for the external-request permission, and every request failed with "You do not have permission to call UrlFetchApp.fetch". The fix was listing the scopes explicitly in `appsscript.json` (`spreadsheets.currentonly` and `script.external_request`), then running `checkSetup` to trigger the authorization dialog. Run `checkSetup` from the editor after any configuration change; it verifies the secret against Cloudflare without printing it.
+
 To update the deployed script without changing its URL: paste the new code, then Deploy → Manage deployments → edit (pencil) → Version: New version → Deploy.
 
 Existing addresses have not been cleaned or migrated. Review prior flagged rows separately, retaining a backup before any cleanup.
