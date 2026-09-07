@@ -22,7 +22,7 @@ No new Substack. A simple signup with stronger spam protection is required.
 ## Still needed before launch
 
 - ~~Alex's chosen video URLs~~ Done 2026-09-06: four clips (2 Instagram, 2 TikTok) as thumbnail cards in a scroll-snap row, thumbnails saved locally under `assets/video-thumbs/`, each card links to the original post.
-- ~~Turnstile public key and server secret configuration, deployment of the protected Apps Script~~ Done 2026-09-07: widget created, protected script deployed, `site-config.js` populated. Deployment verified public (GET returns the script's failure page). Still open: real end-to-end signup check on the live domain (Turnstile rejects localhost), then retirement of the old unprotected Apps Script deployments.
+- ~~Turnstile public key and server secret configuration, deployment of the protected Apps Script~~ Done 2026-09-07: widget created, protected script deployed, `site-config.js` populated. Deployment verified public (GET returns the script's failure page). Site published to alexkirshner.com 2026-09-07 (commit 8fc24ca). First live signup test failed with the generic failure page; backend rewritten to return JSON reason codes and frontend switched to inline fetch submission. Still open: Alex redeploys the updated script (same URL, new version), then a real signup check, then retirement of the old unprotected Apps Script deployments.
 - Publisher author URLs that block automated access need human verification.
 - Live deployment is not yet performed. Original Google sheet and production Apps Script are untouched.
 

@@ -36,8 +36,9 @@
   form.hidden = false;
   document.querySelector('#signup-unavailable').hidden = true;
   const resetState = message => { button.disabled = true; status.textContent = message; };
+  let widgetId;
   window.onSignupTurnstileReady = () => {
-    window.turnstile.render('#turnstile-widget', {
+    widgetId = window.turnstile.render('#turnstile-widget', {
       sitekey: config.turnstileSiteKey,
       action: 'newsletter',
       callback: () => { button.disabled = false; status.textContent = ''; },
@@ -50,14 +51,40 @@
   script.async = true;
   script.onerror = () => resetState('Verification could not load. Please refresh or contact me by email.');
   document.head.append(script);
-  form.addEventListener('submit', event => {
+  const buttonLabel = button.innerHTML;
+  const failed = (message, reason) => {
+    status.classList.remove('is-success');
+    status.innerHTML = '';
+    status.append(message);
+    if (reason) { const code = document.createElement('small'); code.textContent = ` (${reason})`; status.append(code); }
+    button.innerHTML = buttonLabel;
+    // Turnstile tokens are single-use, so the visitor must verify again before retrying.
+    try { window.turnstile.reset(widgetId); } catch (_) { /* Widget may not be rendered. */ }
+    button.disabled = true;
+  };
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
     if (button.disabled || !form.querySelector('[name="cf-turnstile-response"]')?.value) {
-      event.preventDefault(); resetState('Please complete the verification first.'); return;
+      resetState('Please complete the verification first.'); return;
     }
     button.disabled = true;
-    button.textContent = 'Submitting…';
-    status.textContent = 'Opening the signup confirmation…';
-    // Normal navigation: the server reports success only after the row is saved.
+    button.textContent = 'Subscribing…';
+    status.textContent = '';
+    const body = new URLSearchParams(new FormData(form));
+    body.set('format', 'json');
+    try {
+      const response = await fetch(config.signupEndpoint, { method: 'POST', body });
+      const result = await response.json();
+      if (result.ok) {
+        form.querySelector('.signup-row').hidden = true;
+        document.querySelector('#turnstile-widget').hidden = true;
+        status.classList.add('is-success');
+        status.textContent = result.reason === 'already_subscribed' ? 'You’re already on the list. Thanks!' : 'Thanks! You’re on the list.';
+        return;
+      }
+      failed('Sorry, that didn’t go through. Please try again or email me.', result.reason);
+    } catch (_) {
+      failed('Sorry, your address couldn’t be sent. Please try again or email me.', 'network');
+    }
   });
-  window.addEventListener('pageshow', event => { if (event.persisted) location.reload(); });
 })();

@@ -14,7 +14,9 @@ This version keeps the existing Google Sheet and its three columns: Timestamp, E
 6. Verify a real signup from the allowed domain, confirm exactly one spreadsheet row, and verify a repeated address does not add a second row. Verify missing/invalid tokens add nothing. No real signups were submitted during local testing.
 7. Retire all old unprotected web app deployments so bots cannot bypass the protected page. Do not delete the existing sheet or its rows.
 
-The form navigates normally to the Google endpoint; the endpoint returns an explicit success or failure page. No opaque `no-cors` request is treated as success. Turnstile runs only when signup is configured. Localhost is not allowed in the production handler; use a separate test deployment and Turnstile test keys if integration testing locally.
+The page submits with `fetch` (form-encoded, plus `format=json`) and shows the result inline; the endpoint answers with `ContentService` JSON `{ok, reason}`. Apps Script adds `Access-Control-Allow-Origin: *` only to `ContentService` output, so the JSON path must never switch to `HtmlService`, or the browser will block the response. Without JavaScript the form falls back to normal navigation and the HTML result page. Failure reasons (`missing_secret`, `sheet_not_found`, `verify_failed:<cloudflare codes>`, `wrong_hostname`, `exception:<message>`, and so on) are shown in small text under the form to make misconfiguration diagnosable. Turnstile runs only when signup is configured. Localhost is not allowed in the production handler; use a separate test deployment and Turnstile test keys if integration testing locally.
+
+To update the deployed script without changing its URL: paste the new code, then Deploy → Manage deployments → edit (pencil) → Version: New version → Deploy.
 
 Existing addresses have not been cleaned or migrated. Review prior flagged rows separately, retaining a backup before any cleanup.
 
