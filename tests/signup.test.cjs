@@ -29,3 +29,21 @@ for(const [name,options] of Object.entries(rejections)){
 }
 test('duplicate addresses do not create another row (HTML)',()=>{const r=run({duplicate:true});assert.equal(r.rows.length,0);assert.match(r.output,/Thanks for signing up/)});
 test('duplicate addresses report already_subscribed in JSON',()=>{const r=run({duplicate:true,json:true});assert.equal(r.rows.length,0);assert.deepEqual(r.output,{ok:true,reason:'already_subscribed'})});
+
+test('cleanupList moves bot-flagged and repeat addresses to Removed and keeps the rest',()=>{
+  const d=new Date();
+  const rows=[[d,'alex@splitzoneduo.com',''],[d,'reader@example.com',''],[d,'bot@example.com','url field filled'],[d,'Alex@splitzoneduo.com',''],[d,'spam@example.com','honeypot filled, url field filled'],[d,'slow@example.com','submitted in -6.5s']];
+  let kept,removedRows,cleared=false;
+  const removedSheet={getLastRow:()=>0,getRange:()=>({setValues:v=>{removedRows=v}})};
+  const mainSheet={getDataRange:()=>({getValues:()=>rows}),clearContents:()=>{cleared=true},getRange:()=>({setValues:v=>{kept=v}})};
+  const context={
+    PropertiesService:{getScriptProperties:()=>({getProperty:()=>null})},
+    SpreadsheetApp:{getActiveSpreadsheet:()=>({getSheetByName:name=>name==='Removed'?null:mainSheet,insertSheet:()=>removedSheet})},
+    Logger:{log:()=>{}},
+  };
+  vm.createContext(context);vm.runInContext(source,context);
+  context.cleanupList();
+  assert.equal(cleared,true);
+  assert.deepEqual([...kept].map(r=>r[1]),['alex@splitzoneduo.com','reader@example.com','slow@example.com']);
+  assert.deepEqual([...removedRows].map(r=>[r[1],r[3]]),[['bot@example.com','bot'],['Alex@splitzoneduo.com','duplicate'],['spam@example.com','bot']]);
+});

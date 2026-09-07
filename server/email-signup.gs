@@ -40,6 +40,26 @@ function doPost(e) {
   }
 }
 function doGet() { return signupPage(false); }
+// One-off maintenance: run from the editor. Moves bot-flagged rows and repeat addresses
+// to a "Removed" tab instead of deleting them. Safe to run more than once.
+function cleanupList() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = spreadsheet.getSheetByName(PropertiesService.getScriptProperties().getProperty('SHEET_NAME') || 'Sheet1');
+  var removed = spreadsheet.getSheetByName('Removed') || spreadsheet.insertSheet('Removed');
+  var seen = {}, keep = [], drop = [];
+  sheet.getDataRange().getValues().forEach(function (row) {
+    var email = String(row[1] || '').trim().toLowerCase();
+    if (!email) { keep.push(row); return; }
+    if (/honeypot|url field/i.test(String(row[2] || ''))) { drop.push(row.concat(['bot'])); return; }
+    if (seen[email]) { drop.push(row.concat(['duplicate'])); return; }
+    seen[email] = true;
+    keep.push(row);
+  });
+  if (drop.length) removed.getRange(removed.getLastRow() + 1, 1, drop.length, drop[0].length).setValues(drop);
+  sheet.clearContents();
+  if (keep.length) sheet.getRange(1, 1, keep.length, keep[0].length).setValues(keep);
+  Logger.log('Kept ' + keep.length + ' rows, moved ' + drop.length + ' to Removed.');
+}
 function jsonResult(ok, reason) {
   return ContentService.createTextOutput(JSON.stringify({ ok: ok, reason: reason })).setMimeType(ContentService.MimeType.JSON);
 }
