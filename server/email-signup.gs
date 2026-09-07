@@ -40,6 +40,28 @@ function doPost(e) {
   }
 }
 function doGet() { return signupPage(false); }
+// Run from the editor after any setup change; results appear in the execution log.
+// Never logs the secret itself.
+function checkSetup() {
+  var properties = PropertiesService.getScriptProperties();
+  var secret = properties.getProperty('TURNSTILE_SECRET');
+  Logger.log('TURNSTILE_SECRET: ' + (secret ? 'present, ' + secret.length + ' characters' : 'MISSING'));
+  var sheetName = properties.getProperty('SHEET_NAME') || 'Sheet1';
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  Logger.log('Sheet "' + sheetName + '": ' + (sheet ? 'found, ' + sheet.getLastRow() + ' rows' : 'NOT FOUND'));
+  try {
+    var response = UrlFetchApp.fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'post', payload: { secret: secret || 'none', response: 'setup-check' }, muteHttpExceptions: true
+    });
+    var codes = (JSON.parse(response.getContentText())['error-codes'] || []).join(',');
+    Logger.log('Cloudflare reachable: HTTP ' + response.getResponseCode() + ', codes: ' + codes);
+    Logger.log(codes.indexOf('invalid-input-secret') !== -1 ? 'RESULT: the secret is WRONG'
+      : codes.indexOf('invalid-input-response') !== -1 ? 'RESULT: secret accepted. Setup looks good.'
+      : 'RESULT: unexpected Cloudflare response');
+  } catch (error) {
+    Logger.log('Cloudflare call FAILED: ' + error.message);
+  }
+}
 // One-off maintenance: run from the editor. Moves bot-flagged rows and repeat addresses
 // to a "Removed" tab instead of deleting them. Safe to run more than once.
 function cleanupList() {
