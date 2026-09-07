@@ -1,42 +1,19 @@
 # alexkirshner.com
 
-Personal portfolio site for Alex Kirshner — writer, podcast host, co-founder of Split Zone Duo. Hosted on GitHub Pages at [alexkirshner.com](https://alexkirshner.com).
+Alex Kirshner's personal portfolio. A responsive static HTML/CSS/JS site hosted on GitHub Pages, with no build step or dependencies.
 
-## What it is
+## Files
 
-A single-page static site (plain HTML/CSS/JS, no framework) with:
+- `index.html`: introduction, menus, writing, podcast, social profiles, signup, contact.
+- `styles.css`: responsive layouts, light/dark themes, focus and reduced-motion styles.
+- `site.js`: navigation, theme switching, protected signup widget.
+- `site-config.js`: public signup configuration. No secrets.
+- `server/email-signup.gs`: proposed replacement for the existing Google Apps Script.
+- `server/README.md`: signup activation and verification instructions.
+- `docs/BUILD-NOTES.md`: decisions, outstanding work, and resume checkpoint.
 
-- Bio and headshot
-- Email signup form
-- Podcast section (Split Zone Duo)
-- Selected writing clips
-- Contact form
-- Social links
-- Dark mode toggle
+Preview locally with `python3 -m http.server 8000 --bind 127.0.0.1`. Open http://localhost:8000.
 
-## Email signup
+The new signup remains unavailable until configured. Existing spreadsheet records are preserved; no list migration or production deployment has been performed. Video cards currently link to Alex's profiles until featured clips are selected.
 
-The email capture form at the top of the page posts to a Google Apps Script web app, which appends rows to a Google Sheet. No email notifications — signups just accumulate in the spreadsheet.
-
-The form is intentionally frictionless (no CAPTCHA, no math challenge). Instead, hidden fields help identify bots after the fact:
-
-- **Honeypot fields**: hidden inputs that bots fill but humans never see
-- **Timestamp**: records when the page loaded, so submissions within seconds of load can be flagged
-
-The Apps Script writes three columns: timestamp, email, and a bot flag (empty for clean signups, descriptive text for suspicious ones). The source script lives at `~/email-signup.gs`.
-
-## Contact form
-
-The contact form uses [FormSubmit.co](https://formsubmit.co) and has heavier bot protection: honeypot fields, timing checks, interaction tracking, a math challenge, spam pattern matching, and disposable email blocking.
-
-## Hosting
-
-- GitHub Pages from the `main` branch of this repo
-- Custom domain via CNAME record
-- Cloudflare Web Analytics for traffic tracking
-
-## Recent changes (April 2026)
-
-- Removed Hang Up and Listen podcast section (show is ending)
-- Added email signup form at top of page, backed by Google Sheets via Apps Script
-- Chose a low-friction approach to email capture: no gates for users, hidden signals for bot detection after the fact
+Publishing the main branch updates GitHub Pages. Review the launch checklist in `docs/BUILD-NOTES.md` first. The CNAME and existing Cloudflare analytics token are preserved.

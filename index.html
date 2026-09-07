@@ -6,6 +6,8 @@
   <title>Alex Kirshner</title>
   <meta name="description" content="Alex Kirshner is a freelance writer and podcast host based in Los Angeles.">
   <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="site.js" defer></script>
 
   <!-- Structured data for search engines and LLMs -->
   <script type="application/ld+json">
@@ -27,70 +29,39 @@
   </script>
 </head>
 <body>
-  <button class="theme-toggle" aria-label="Toggle dark mode">
-    <span class="label-dark">Dark Mode</span>
-    <span class="label-light">Light Mode</span>
-  </button>
-  <script>
-    (function() {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        document.documentElement.setAttribute('data-theme', saved);
-      }
-    })();
-  </script>
-  <div class="container">
-    <header>
-      <div class="header-content">
-        <div class="headshot">
-          <img src="headshot.jpg" alt="Alex Kirshner">
-        </div>
-        <div class="header-text">
-          <h1>Alex Kirshner</h1>
-          <p class="tagline">Writer and Podcast Host</p>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header wrap">
+  <a class="wordmark" href="#main">Alex Kirshner<span class="brand-dot">.</span></a>
+  <nav aria-label="Main navigation">
+    <details class="nav-menu"><summary>Writing <span class="chevron" aria-hidden="true">⌄</span></summary><div class="dropdown"><a href="https://slate.com/author/alex-kirshner">Slate <span>↗</span></a><a href="https://www.nytimes.com/athletic/author/alex-kirshner/">The Athletic <span>↗</span></a><a href="https://www.theringer.com/creator/alex-kirshner">The Ringer <span>↗</span></a><a href="https://www.theatlantic.com/author/alex-kirshner/">The Atlantic <span>↗</span></a><a href="#writing">Selected stories <span>↓</span></a></div></details>
+    <details class="nav-menu"><summary>Podcasting <span class="chevron" aria-hidden="true">⌄</span></summary><div class="dropdown"><a href="https://www.splitzoneduo.com/archive">All episodes <span>↗</span></a><a href="https://www.splitzoneduo.com/about">About Split Zone Duo <span>↗</span></a><a href="https://www.splitzoneduo.com/subscribe">Subscribe <span>↗</span></a><a href="#podcasting">Podcasting <span>↓</span></a></div></details>
+    <a class="nav-video" href="#video">Video</a>
+  </nav>
+</header>
+<main id="main" class="wrap">
+  <section class="hero" aria-labelledby="intro-title">
+    <div class="intro">
+      <img class="headshot" src="headshot.jpg" alt="Alex Kirshner" width="88" height="88">
+      <p class="eyebrow">Writer · Podcast host · Video creator</p>
+      <h1 id="intro-title">Alex<br>Kirshner<span>.</span></h1>
+      <p class="bio">I write about sports and non-sports. I co-host Split Zone Duo, a national college football podcast, and I spend lots of time making social media connections.</p>
+      <a class="button" href="#contact">Work with me <span aria-hidden="true">↗</span></a>
+    </div>
+    <section class="video-section" id="video" aria-labelledby="video-title">
+      <div class="section-heading"><h2 class="eyebrow" id="video-title">On your screen</h2><span class="small-label">Social video</span></div>
+      <div class="video-grid" id="video-grid">
+        <a class="social-card video-card" href="https://www.instagram.com/p/Dc70-JmMJoB/"><img src="assets/video-thumbs/ig-dc7.jpg" alt="Video still: Alex explains the NBC and Big Ten clock discrepancy" loading="lazy" width="640" height="1136"><span class="card-top">Instagram <span aria-hidden="true">↗</span></span><span class="card-art" aria-hidden="true"><span class="play-symbol">▷</span></span><span class="card-bottom">Whose clock is wrong: NBC or the Big Ten?</span></a>
+        <a class="social-card video-card" href="https://www.tiktok.com/@alex_kirshner/video/7675387381465287950"><img src="assets/video-thumbs/tiktok-fishy.jpg" alt="Video still: the most remote team in college football" loading="lazy" width="1080" height="1920"><span class="card-top">TikTok <span aria-hidden="true">↗</span></span><span class="card-art" aria-hidden="true"><span class="play-symbol">▷</span></span><span class="card-bottom">3–5 hours from literally everywhere.</span></a>
+        <a class="social-card video-card" href="https://www.instagram.com/p/Dba_3RRhv0I/"><img src="assets/video-thumbs/ig-dba.jpg" alt="Video still: the 2008 Apple Cup" loading="lazy" width="640" height="1136"><span class="card-top">Instagram <span aria-hidden="true">↗</span></span><span class="card-art" aria-hidden="true"><span class="play-symbol">▷</span></span><span class="card-bottom">The 2008 Apple Cup, an all-time embarrassment.</span></a>
+        <a class="social-card video-card" href="https://www.tiktok.com/@alex_kirshner/video/7671399743070817550"><img src="assets/video-thumbs/tiktok-kansas.jpg" alt="Video still: a Kansas football history lesson" loading="lazy" width="1080" height="1920"><span class="card-top">TikTok <span aria-hidden="true">↗</span></span><span class="card-art" aria-hidden="true"><span class="play-symbol">▷</span></span><span class="card-bottom">Sorry, Jayhawks.</span></a>
       </div>
-    </header>
-
-    <section id="signup" class="highlight-section">
-      <h2>Emails!</h2>
-      <p>Want to keep up with what I'm doing next? Leave your email here, and I'll make sure you're the first to know. Thanks to everyone who listened to Hang Up and Listen!</p>
-      <form class="signup-form" action="https://script.google.com/macros/s/AKfycby79U7IJYM3D0serToxmfKstsXsoFAq48Q4E2X7-eUGXkkJze-iovsZpZCDqaCkIewD_Q/exec" method="POST">
-        <!-- Honeypot: bots fill this, humans never see it -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-        <div class="form-guard" aria-hidden="true">
-          <label for="signup-url">Website</label>
-          <input type="text" id="signup-url" name="url" tabindex="-1" autocomplete="off">
-        </div>
-        <!-- Hidden timestamp for post-hoc bot detection -->
-        <input type="hidden" id="signup-time" name="signup_timestamp" value="">
-        <div class="signup-row">
-          <input type="email" name="email" placeholder="Email address" required aria-label="Email address">
-          <button type="submit" id="signup-btn">Submit</button>
-        </div>
-      </form>
-      <p class="signup-success" id="signup-success">Thanks for signing up!</p>
+      <p class="video-note">More on <a href="https://www.instagram.com/akirshner/">Instagram @akirshner ↗</a> and <a href="https://www.tiktok.com/@alex_kirshner">TikTok @alex_kirshner ↗</a>.</p>
     </section>
-
-    <section id="about">
-      <p>I'm a writer and podcast host living in Los Angeles. My writing appears regularly in <em>Slate</em>, <em>The Athletic</em>, <em>The Ringer</em>, and a wide range of other publications. I am co-founder and co-host of Split Zone Duo, a national college football podcast. At the bottom of this page, you can find a small sample of my work, as well as a feedback form in case you'd like to get in touch. Thanks for stopping by.</p>
-    </section>
-
-    <a href="https://www.splitzoneduo.com" class="podcast-link">
-    <section id="podcasts" class="highlight-section">
-      <h2>Podcast</h2>
-      <ul class="podcast-list">
-        <li>
-          <strong>Split Zone Duo</strong>
-          <p class="blurb">An independent college football podcast, entertaining and informing thousands of paid subscribers several times each week. Available wherever you get podcasts or via Substack.</p>
-        </li>
-      </ul>
-    </section>
-    </a>
-
-    <section id="writing">
-      <h2>Selected Writing</h2>
-      <ul>
+  </section>
+  <div class="work-grid">
+    <section id="writing" class="writing-section" aria-labelledby="writing-title">
+      <div class="section-heading"><h2 id="writing-title">In print<span>.</span></h2><span class="eyebrow">Selected writing</span></div>
+      <ul class="story-list">
         <li>
           <a href="https://www.theringer.com/2026/01/14/nfl/mike-tomlin-fired-pittsburgh-steelers-fan-base-outlook">The Steelers' Post–Mike Tomlin Psychology Experiment</a>
           <p class="blurb"><em>The Ringer</em>, January 2026</p>
@@ -116,343 +87,33 @@
           <p class="blurb"><em>Slate</em>, December 2020</p>
         </li>
       </ul>
+      <details class="publication-list"><summary>More writing by publication <span aria-hidden="true">＋</span></summary><div><a href="https://slate.com/author/alex-kirshner">Slate <span>↗</span></a><a href="https://www.nytimes.com/athletic/author/alex-kirshner/">The Athletic <span>↗</span></a><a href="https://www.theringer.com/creator/alex-kirshner">The Ringer <span>↗</span></a><a href="https://www.theatlantic.com/author/alex-kirshner/">The Atlantic <span>↗</span></a></div></details>
     </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Want to work with me? Have a good idea for a story? Send me a message here.</p>
-      <form class="contact-form" id="contact-form" action="https://formsubmit.co/alex@splitzoneduo.com" method="POST">
-        <input type="hidden" name="_subject" value="New message from alexkirshner.com">
-        <input type="hidden" name="_captcha" value="false">
-        <!-- Honeypot fields - bots will fill these, humans won't see them -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-        <div class="form-guard" aria-hidden="true">
-          <label for="website">Website</label>
-          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <div class="form-guard" aria-hidden="true">
-          <label for="phone_number">Phone</label>
-          <input type="tel" id="phone_number" name="phone_number" tabindex="-1" autocomplete="off">
-        </div>
-        <!-- JS challenge field - must be set by JavaScript -->
-        <input type="hidden" id="js-check" name="_gotcha" value="">
-        <!-- Timestamp for timing check -->
-        <input type="hidden" id="form-time" name="_formtime" value="">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required minlength="2" maxlength="100">
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required maxlength="254">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required minlength="10" maxlength="5000"></textarea>
-        </div>
-        <!-- Math challenge - bots can't solve this -->
-        <div class="form-group math-challenge">
-          <label for="math-answer">Quick check: <span id="math-question"></span></label>
-          <input type="text" id="math-answer" name="math_answer" required autocomplete="off" inputmode="numeric" pattern="-?[0-9]+">
-        </div>
-        <input type="hidden" id="math-expected" value="">
-        <input type="hidden" id="interactions" name="_interactions" value="0">
-        <button type="submit" id="submit-btn">Send Message</button>
-        <p id="form-error" class="form-error" role="alert"></p>
-      </form>
-    </section>
-
-    <footer>
-      <div class="social-links">
-        <a href="https://instagram.com/akirshner" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-        </a>
-        <a href="https://tiktok.com/@alex_kirshner" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-        </a>
-        <a href="https://bsky.app/profile/alexkirshner.com" aria-label="Bluesky">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/></svg>
-        </a>
-        <a href="https://x.com/alex_kirshner" aria-label="X">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://www.threads.net/@akirshner" aria-label="Threads">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.182.408-2.256 1.333-3.023.856-.71 2.053-1.146 3.466-1.265 1.125-.094 2.167-.028 3.127.157.018-.604-.015-1.163-.123-1.67-.166-.784-.525-1.383-1.066-1.78-.612-.448-1.477-.673-2.571-.673h-.009c-1.273.007-2.273.39-2.97 1.14-.632.678-1.004 1.62-1.112 2.777l-2.08-.125c.14-1.6.692-2.946 1.64-4.002 1.058-1.18 2.536-1.8 4.395-1.845h.099c1.594 0 2.913.378 3.922 1.122.947.698 1.6 1.678 1.94 2.91.134.48.22.988.262 1.525 1.043.381 1.927.925 2.62 1.62 1.053 1.053 1.678 2.443 1.78 3.896.074 1.045-.08 2.473-.963 3.862-.978 1.538-2.59 2.653-4.793 3.316-1.4.422-3.004.636-4.772.636zm-.417-8.283c-1.094.064-1.974.376-2.548.903-.473.434-.68.949-.65 1.53.037.68.397 1.27 1.015 1.662.535.34 1.256.52 2.087.52.114 0 .229-.003.345-.012 1.086-.06 1.94-.47 2.535-1.218.496-.624.828-1.46.98-2.477-.94-.212-1.958-.291-2.99-.214-.26.022-.52.052-.774.092z"/></svg>
-        </a>
-        <a href="https://linkedin.com/in/alex-kirshner-0566236b" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </a>
+    <section id="podcasting" class="podcast-section" aria-labelledby="podcast-title">
+      <div class="podcast-card">
+        <p class="eyebrow">Co-founder & co-host</p>
+        <h2 id="podcast-title" class="szd-wordmark" aria-label="Split Zone Duo"></h2>
+        <p>A national college football podcast. Independent, in depth, and available wherever you listen or watch.</p>
+        <p class="podcast-reach">Reaching <strong>15,000</strong> <span>downloaders per episode.</span></p>
+        <div class="podcast-links"><a href="https://www.splitzoneduo.com/archive">All episodes <span>↗</span></a><a href="https://www.splitzoneduo.com/about">About the show <span>↗</span></a><a href="https://www.splitzoneduo.com/subscribe">How to subscribe <span>↗</span></a></div>
+        <div class="podcast-partnership"><p>Work with me on the podcast, on social media, or both.</p><a class="sponsor-link" href="mailto:alex@splitzoneduo.com?subject=Podcast%20and%20social%20media%20partnership">Let’s talk partnerships <span aria-hidden="true">↗</span></a></div>
       </div>
-    </footer>
+    </section>
   </div>
-  <script>
-    const toggle = document.querySelector('.theme-toggle');
-
-    toggle.addEventListener('click', function() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      let newTheme;
-      if (current === 'dark') {
-        newTheme = 'light';
-      } else if (current === 'light') {
-        newTheme = 'dark';
-      } else {
-        // No theme set, toggle from system preference
-        newTheme = prefersDark ? 'light' : 'dark';
-      }
-
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
-
-    // Hide toggle when scrolled down
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 50) {
-        toggle.classList.add('hidden');
-      } else {
-        toggle.classList.remove('hidden');
-      }
-    });
-
-    // --- Bot Protection for Contact Form ---
-    (function() {
-      const form = document.getElementById('contact-form');
-      const jsCheck = document.getElementById('js-check');
-      const formTime = document.getElementById('form-time');
-      const errorEl = document.getElementById('form-error');
-      const submitBtn = document.getElementById('submit-btn');
-      const mathQuestion = document.getElementById('math-question');
-      const mathExpected = document.getElementById('math-expected');
-      const mathAnswer = document.getElementById('math-answer');
-      const interactionsField = document.getElementById('interactions');
-
-      // Handle signup form via fetch (no page navigation)
-      var signupForm = document.querySelector('.signup-form');
-      signupForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var btn = document.getElementById('signup-btn');
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-        fetch(signupForm.action, {
-          method: 'POST',
-          body: new FormData(signupForm),
-          mode: 'no-cors'
-        }).then(function() {
-          signupForm.style.display = 'none';
-          document.getElementById('signup-success').style.display = 'block';
-        });
-      });
-
-      // Stamp signup form with page-load time (for post-hoc bot detection)
-      const signupTimeField = document.getElementById('signup-time');
-      if (signupTimeField) {
-        signupTimeField.value = new Date().toISOString();
-      }
-
-      // Record when form was loaded (bots submit instantly)
-      const loadTime = Date.now();
-      formTime.value = loadTime.toString();
-
-      // Set JS challenge - proves JavaScript is running (many bots don't execute JS)
-      jsCheck.value = '';
-
-      // Generate math challenge
-      const num1 = Math.floor(Math.random() * 10) + 1;
-      const num2 = Math.floor(Math.random() * 10) + 1;
-      const operators = ['+', '-'];
-      const op = operators[Math.floor(Math.random() * operators.length)];
-      const answer = op === '+' ? num1 + num2 : num1 - num2;
-      mathQuestion.textContent = 'What is ' + num1 + ' ' + op + ' ' + num2 + '?';
-      mathExpected.value = answer.toString();
-
-      // Track user interactions (bots don't interact like humans)
-      let interactionCount = 0;
-      const fieldsInteracted = new Set();
-
-      function trackInteraction(fieldId) {
-        if (!fieldsInteracted.has(fieldId)) {
-          fieldsInteracted.add(fieldId);
-          interactionCount++;
-          interactionsField.value = interactionCount.toString();
-        }
-      }
-
-      ['name', 'email', 'message', 'math-answer'].forEach(function(id) {
-        const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener('focus', function() { trackInteraction(id); });
-          el.addEventListener('input', function() { trackInteraction(id); });
-        }
-      });
-
-      // Spam patterns to check against (expanded)
-      const spamPatterns = [
-        /\b(viagra|cialis|casino|lottery|winner|cryptocurrency|bitcoin|crypto\s*trading|forex|investment opportunity)\b/i,
-        /\b(click here|act now|limited time|free money|make money fast|earn \$|double your)\b/i,
-        /\b(SEO|backlink|link building|guest post|sponsored post|link exchange|web traffic)\b/i,
-        /\b(dear sir|dear madam|dear friend|dear website owner|dear webmaster)\b/i,
-        /\b(nigerian|inheritance|beneficiary|next of kin|offshore account|wire transfer)\b/i,
-        /\b(weight loss|diet pill|enlargement|pharmacy|prescription|medication without)\b/i,
-        /\b(work from home|be your own boss|financial freedom|passive income|mlm|multi-level)\b/i,
-        /\b(adult|xxx|porn|webcam|dating site|singles in your area|meet hot)\b/i,
-        /\b(congratulations|you have been selected|you have won|claim your prize|act now)\b/i,
-        /\b(instagram followers|buy followers|social media marketing|grow your audience)\b/i,
-        /<[^>]*>/,  // HTML tags
-        /\[url=/i,  // BBCode links
-        /(http[s]?:\/\/.*){3,}/i,  // Multiple URLs
-        /(.)\1{4,}/,  // Repeated characters (aaaaa, !!!!!!)
-        /\b[A-Z]{5,}\b/,  // ALL CAPS words (5+ letters)
-      ];
-
-      // Disposable/temporary email domains to block
-      const disposableDomains = [
-        'tempmail', 'guerrillamail', '10minutemail', 'throwaway', 'mailinator',
-        'fakeinbox', 'tempinbox', 'disposable', 'trashmail', 'sharklasers',
-        'guerrillamail', 'maildrop', 'mintemail', 'temp-mail', 'emailondeck',
-        'getnada', 'mohmal', 'yopmail', 'dispostable', 'mailnesia', 'spamgourmet',
-        'getairmail', 'discard.email', 'tempr.email', 'fakemailgenerator'
-      ];
-
-      function showError(message) {
-        errorEl.textContent = message;
-        errorEl.style.display = 'block';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
-      }
-
-      function clearError() {
-        errorEl.textContent = '';
-        errorEl.style.display = 'none';
-      }
-
-      function silentFail() {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-        setTimeout(function() {
-          submitBtn.textContent = 'Message Sent!';
-        }, 1500);
-      }
-
-      form.addEventListener('submit', function(e) {
-        clearError();
-
-        // Check honeypot fields (bots fill hidden fields)
-        const website = document.getElementById('website').value;
-        const phone = document.getElementById('phone_number').value;
-
-        if (website || phone) {
-          e.preventDefault();
-          silentFail();
-          return;
-        }
-
-        // Check timing - humans take at least 5 seconds to fill a form
-        const submitTime = Date.now();
-        const elapsed = submitTime - loadTime;
-
-        if (elapsed < 5000) {
-          e.preventDefault();
-          silentFail();
-          return;
-        }
-
-        // Check that user interacted with at least 3 fields (bots often don't trigger events)
-        if (interactionCount < 3) {
-          e.preventDefault();
-          silentFail();
-          return;
-        }
-
-        // Get form values
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        const userAnswer = mathAnswer.value.trim();
-
-        // Validate math challenge
-        if (userAnswer !== mathExpected.value) {
-          e.preventDefault();
-          showError('Please check your math answer.');
-          return;
-        }
-
-        // Validate name (must have at least one space for full name, or be 2+ chars)
-        if (name.length < 2) {
-          e.preventDefault();
-          showError('Please enter your name.');
-          return;
-        }
-
-        // Check for gibberish names (consonant clusters without vowels)
-        const vowelRatio = (name.match(/[aeiou]/gi) || []).length / name.replace(/\s/g, '').length;
-        if (name.length > 3 && vowelRatio < 0.1) {
-          e.preventDefault();
-          silentFail();
-          return;
-        }
-
-        // Validate email format more strictly
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-        if (!emailRegex.test(email)) {
-          e.preventDefault();
-          showError('Please enter a valid email address.');
-          return;
-        }
-
-        // Check for disposable email domains
-        const emailDomain = email.split('@')[1].toLowerCase();
-        for (const domain of disposableDomains) {
-          if (emailDomain.includes(domain)) {
-            e.preventDefault();
-            showError('Please use a permanent email address.');
-            return;
-          }
-        }
-
-        // Validate message
-        if (message.length < 10) {
-          e.preventDefault();
-          showError('Please enter a message (at least 10 characters).');
-          return;
-        }
-
-        // Check for spam patterns
-        const fullContent = (name + ' ' + message);
-        for (const pattern of spamPatterns) {
-          if (pattern.test(fullContent)) {
-            e.preventDefault();
-            silentFail();
-            return;
-          }
-        }
-
-        // Check for excessive URLs in message (spam indicator)
-        const urlCount = (message.match(/http[s]?:\/\//gi) || []).length;
-        if (urlCount > 2) {
-          e.preventDefault();
-          showError('Please limit links in your message.');
-          return;
-        }
-
-        // Check message isn't mostly uppercase (spam indicator)
-        const upperCount = (message.match(/[A-Z]/g) || []).length;
-        const letterCount = (message.match(/[a-zA-Z]/g) || []).length;
-        if (letterCount > 20 && upperCount / letterCount > 0.7) {
-          e.preventDefault();
-          silentFail();
-          return;
-        }
-
-        // All checks passed - show sending state
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-      });
-    })();
-
-  </script>
-  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "215210ca1aa346b5a591f22f92af5a4d"}'></script><!-- End Cloudflare Web Analytics -->
-</body>
-</html>
+  <section class="signup-section" aria-labelledby="signup-title">
+    <div><p class="eyebrow">An occasional email</p><h2 id="signup-title">Keep in touch<span>.</span></h2><p>Updates on my work, straight to your inbox.</p></div>
+    <div class="signup-container">
+      <form id="signup-form" method="post" hidden>
+        <label for="signup-email">Email address</label>
+        <div class="signup-row"><input id="signup-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required><button type="submit" id="signup-submit" disabled>Subscribe <span aria-hidden="true">→</span></button></div>
+        <div class="form-guard" aria-hidden="true"><label for="signup-website">Website</label><input id="signup-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <div id="turnstile-widget"></div><p class="form-status" id="signup-status" role="status" aria-live="polite"></p>
+      </form>
+      <p id="signup-unavailable">Email signup is being updated. You can still <a href="mailto:alex@splitzoneduo.com">get in touch directly ↗</a>.</p>
+    </div>
+  </section>
+  <section id="contact" class="contact-section" aria-labelledby="contact-title"><div><p class="eyebrow">Assignments · Sponsorships · Social partnerships</p><h2 id="contact-title">Let’s talk<span>.</span></h2></div><a class="email-link" href="mailto:alex@splitzoneduo.com">alex@splitzoneduo.com <span aria-hidden="true">↗</span></a></section>
+</main>
+<footer class="wrap site-footer"><span>Alex Kirshner</span><div><a href="https://www.instagram.com/akirshner/">Instagram</a><a href="https://www.tiktok.com/@alex_kirshner">TikTok</a><a href="https://bsky.app/profile/alexkirshner.com">Bluesky</a><a href="https://x.com/alex_kirshner">X</a><a href="https://linkedin.com/in/alex-kirshner-0566236b">LinkedIn</a></div><button id="theme-toggle" type="button" hidden>Dark mode</button></footer>
+<!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "215210ca1aa346b5a591f22f92af5a4d"}'></script>
+</body></html>
