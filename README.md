@@ -21,8 +21,8 @@ The existing newsletter signup remains separate, using the configured Google App
 ## Files
 
 - `index.html`: content, navigation, inquiries, newsletter, and search/share metadata.
-- `styles.css`: editorial layout, responsive styles, light/dark themes, and accessibility affordances.
-- `site.js`: theme preference, local email-draft builder, and protected signup frontend.
+- `styles.css`: editorial layout, responsive styles, a fixed black-and-white palette, and accessibility affordances.
+- `site.js`: local email-draft builder, and protected signup frontend.
 - `site-config.js`: public newsletter endpoint and public Turnstile key.
 - `assets/`: optimized live-show portrait, current video thumbnails, SZD branding, favicon, and share image.
 - `tests/signup.test.cjs`: Google Apps Script signup contract tests.
@@ -46,8 +46,8 @@ Browser checks require Playwright and a Chromium browser in the development envi
 node --test tests/browser.test.cjs
 ```
 
-Set `NODE_PATH` to an existing Playwright package directory if needed. Set `BROWSER_PATH` to use an installed Chrome executable instead of Playwright’s bundled Chromium. Optionally set `SCREENSHOT_DIR` to capture desktop, mobile, and dark-mode previews. These are development tools only; the published website needs none of them.
+Set `NODE_PATH` to an existing Playwright package directory if needed. Set `BROWSER_PATH` to use an installed Chrome executable instead of Playwright’s bundled Chromium. Optionally set `SCREENSHOT_DIR` to capture desktop and mobile previews. These are development tools only; the published website needs none of them.
 
 ## Publish
 
-Merging to `main` publishes through the existing GitHub Pages setup at [alexkirshner.com](https://alexkirshner.com/). The revamp is prepared on `codex/portfolio-revamp`; production publication is a separate step. The CNAME, analytics configuration, and live signup backend are preserved.
+Merging to `main` publishes through the existing GitHub Pages setup at [alexkirshner.com](https://alexkirshner.com/). The revamp is prepared on `codex/portfolio-revamp`; Alex requested keeping the revamp local on October 28; do not push or open a PR without a subsequent request. The CNAME, analytics configuration, and live signup backend are preserved.

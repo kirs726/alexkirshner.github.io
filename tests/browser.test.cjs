@@ -160,10 +160,7 @@ test('direct email and copy failure fallback remain usable', async () => {
   await page.waitForFunction(() => document.querySelector('#copy-status').textContent.includes('Select the address'));
 });
 
-test('theme preference survives reload and publication list is keyboard accessible', async () => {
-  await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
-  await page.reload();
-  assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+test('publication list is keyboard accessible', async () => {
   const summary = page.locator('.publication-list summary');
   await summary.focus();
   await page.keyboard.press('Enter');
@@ -174,12 +171,13 @@ test('theme preference survives reload and publication list is keyboard accessib
   assert.deepEqual(errors, []);
 });
 
-test('unavailable local storage does not break contact or theme controls', async () => {
-  await page.addInitScript(() => { Object.defineProperty(window, 'localStorage', { get() { throw Error('Unavailable'); } }); });
+test('black-and-white presentation overrides earlier light-mode preferences', async () => {
+  await page.evaluate(() => localStorage.setItem('theme', 'light'));
   await page.reload();
   assert.equal(await page.locator('#inquiry-form').isVisible(), true);
-  await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
-  assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+  const colors = await page.locator('body').evaluate(el => ({ background: getComputedStyle(el).backgroundColor, text: getComputedStyle(el).color }));
+  assert.deepEqual(colors, { background: 'rgb(0, 0, 0)', text: 'rgb(255, 255, 255)' });
+  assert.equal(await page.locator('#theme-toggle').count(), 0);
   assert.deepEqual(errors, []);
 });
 
@@ -236,12 +234,11 @@ test('metadata, anchor targets, and control labels are complete', async () => {
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), 'https://alexkirshner.com/');
 });
 
-test('optional screenshots capture fully loaded desktop, mobile, and dark mode', async () => {
+test('optional screenshots capture fully loaded desktop and mobile', async () => {
   if (!process.env.SCREENSHOT_DIR) return;
   await fs.mkdir(process.env.SCREENSHOT_DIR, { recursive: true });
-  for (const [name, width, theme] of [['desktop', 1440, 'light'], ['mobile', 390, 'light'], ['dark', 1440, 'dark']]) {
+  for (const [name, width] of [['desktop', 1440], ['mobile', 390]]) {
     await page.setViewportSize({ width, height: 1000 });
-    await page.evaluate(theme => document.documentElement.dataset.theme = theme, theme);
     for (const image of await page.locator('img').all()) { await image.scrollIntoViewIfNeeded(); await image.evaluate(el => el.decode()); }
     await page.evaluate(() => { document.querySelector('.video-grid').scrollLeft = 0; scrollTo(0, 0); });
     await page.screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `${name}.png`), fullPage: true });

@@ -9,13 +9,13 @@ This revamp supersedes the September layout and introduction recorded in this fi
 ## Implemented
 
 - One-page, dependency-free site with direct navigation to Video, Writing, Split Zone Duo, and Contact.
-- Warm paper, deep green, serif headlines, thin rules, and an existing live-show portrait. No remote fonts, autoplay, embedded social widgets, or scroll-triggered animations.
+- Black background, white text and controls, serif headlines, thin rules, and an existing live-show portrait. No remote fonts, autoplay, embedded social widgets, or scroll-triggered animations.
 - Three current, published video examples, including a clearly labeled Chase × SZD paid partnership.
 - Dated personal Instagram/TikTok views and shares, with platform and measurement-window context.
-- Six writing selections covering sports, business, technology, public space, and gambling, with publication archives for broader browsing. Some display titles are shortened descriptions rather than verbatim headlines.
+- Six writing selections covering sports, public space, and gambling, with publication archives for broader browsing. Some display titles are shortened descriptions rather than verbatim headlines.
 - A distinct SZD section connected to both listening and partnership inquiries.
 - Inquiry type is the only required contact field. Optional details sit in a native disclosure. The email opens with a fixed subject and useful prompts, or the details the visitor supplied. Nothing is sent by the website. Direct address reveal/copy and a no-JavaScript fallback are available.
-- Existing protected newsletter backend and public configuration retained. Light/dark preference, keyboard access, reduced-motion support, share metadata, and structured data included.
+- Existing protected newsletter backend and public configuration retained. A fixed monochrome palette, keyboard access, reduced-motion support, share metadata, and structured data included.
 
 ## Content provenance
 
@@ -52,9 +52,9 @@ The October Slate story’s publication and URL are confirmed in Alex’s freela
 - Existing backend suite: 27 tests passed before and after the work.
 - Browser suite: 16 checks passed, including responsive navigation and image loading at 320, 390, 700, 768, 1024, 1440, and 1920 pixels; no page-wide horizontal overflow. Video rail intentionally scrolls horizontally on phones.
 - All inquiry types tested, including Unicode, ampersands, multiline ideas, optional details, fixed subjects, and no HTTP form submission. A regression test first demonstrated that the earlier required details prevented the desired type-only email path, then passed after the change.
-- Direct email reveal and denied-clipboard fallback, theme persistence, unavailable local storage, keyboard disclosure control, anchor targets, control labels, structured data, and no-JavaScript contact tested.
+- Direct email reveal and denied-clipboard fallback, compatibility with an earlier saved light-mode preference, keyboard disclosure control, anchor targets, control labels, structured data, and no-JavaScript contact tested.
 - Newsletter success and rejection tested in the browser against mocked services; real backend contract checked by the unchanged server tests. No real signup or email was sent, and the production Apps Script was not changed. The client now explicitly requests Cloudflare’s supported compact widget size so a real challenge fits the narrowest layout.
-- Representative text contrast measured in light/dark themes: minimum sampled normal-text ratio 4.75:1. Reduced-motion mode disables smooth scrolling.
+- The original light/dark palette was checked before this revision; the requested monochrome palette is checked in the current browser tests and visual preview. Reduced-motion mode disables smooth scrolling.
 - JavaScript syntax and Git whitespace checks run. No lint/typecheck command or build step is configured for this static project.
 - Browser screenshots visually inspected. Local user-facing copies are kept in ignored `output/previews/`.
 
@@ -66,4 +66,12 @@ The review identified a Turnstile-mock footprint coverage gap. A dimensionally f
 
 ## Deployment
 
-The working preview runs at http://127.0.0.1:8897. Production remains on the prior site until this feature branch is merged to `main`. Keep the existing `CNAME`, public signup configuration, and Cloudflare analytics token. The local preview cannot validate a real Turnstile challenge because the production widget is restricted to the production hostname.
+The working preview runs at http://127.0.0.1:8897. Alex explicitly requested keeping the revamp local on October 28. No branch push or PR is authorized; publication requires a subsequent instruction. Production remains on the prior site. Keep the existing `CNAME`, public signup configuration, and Cloudflare analytics token. The local preview cannot validate a real Turnstile challenge because the production widget is restricted to the production hostname.
+
+## Alex’s copy and monochrome revision — October 28
+
+Replaced the hero heading/bio, sponsorship paragraph, and SZD description with Alex’s supplied wording. Removed the extra video/writing introductions, story blurbs, photo caption, and contact sales copy. Kept the 4.7M views, 42K+ shares, source window, work links, and inquiry flow. Removed the light/dark switch so the page stays black and white regardless of older saved preferences; the SZD logo renders white through CSS, while actual photos and video thumbnails retain their colors. The favicon, share metadata, and share image match the revised design.
+
+Removed the Slate AI-icons article and made [the Oregon column](https://www.nytimes.com/athletic/7724389/2026/10/26/dan-lanning-oregon-wasted-season/) the first selection. Alex supplied the published Athletic PDF, whose first page verifies the exact headline, Alex’s byline, October 26, 2026 date, and matching URL. The PDF is source material only; it is not copied into public assets.
+
+Revised browser coverage for the fixed palette and retained keyboard-disclosure checks. The 16 browser checks and 27 backend checks all pass. The site remains local.

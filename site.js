@@ -1,20 +1,4 @@
 (() => {
-  const toggle = document.querySelector('#theme-toggle');
-  let theme;
-  try { theme = localStorage.getItem('theme'); } catch (_) { /* Storage may be unavailable. */ }
-  if (theme !== 'dark' && theme !== 'light') theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const applyTheme = () => {
-    document.documentElement.dataset.theme = theme;
-    toggle.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
-  };
-  applyTheme(); toggle.hidden = false;
-  toggle.addEventListener('click', () => {
-    theme = theme === 'dark' ? 'light' : 'dark'; applyTheme();
-    try { localStorage.setItem('theme', theme); } catch (_) { /* Theme still works for this visit. */ }
-  });
-})();
-
-(() => {
   const form = document.querySelector('#inquiry-form');
   const type = document.querySelector('#inquiry-type');
   const hint = document.querySelector('#inquiry-hint');
