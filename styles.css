@@ -61,9 +61,11 @@ h1 { font-size: clamp(70px, 11.65vw, 153px); letter-spacing: -.065em; line-heigh
 .work-section { border-top: 1px solid var(--ink); padding: 26px 0 70px; }
 .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 42px; }
 .section-number { color: var(--accent); font: 12px/1 var(--serif); }
-.section-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 84px; align-items: start; margin-bottom: 38px; }
-.section-intro > div { color: var(--muted); max-width: 460px; padding-top: 4px; font-size: 14px; }
-.section-intro > div > .text-link { margin-top: 16px; }
+.section-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 28px; }
+.section-heading .section-label { margin-bottom: 0; }
+.section-heading .inline-links { margin-top: 0; }
+.section-title { font: 500 19px/1.4 var(--sans); letter-spacing: 1.4px; text-transform: uppercase; }
+.video-intro { max-width: 720px; margin-bottom: 30px; color: var(--muted); font-size: 14px; }
 .inline-links { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 20px; }
 .inline-links .text-link { gap: 15px; }
 .video-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; }
@@ -71,6 +73,7 @@ h1 { font-size: clamp(70px, 11.65vw, 153px); letter-spacing: -.065em; line-heigh
 .video-image { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--wash); }
 .video-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(#0006, transparent 30%, transparent 80%, #0002); pointer-events: none; }
 .video-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .3s ease; }
+.video-image .stat-line-thumbnail { object-position: center bottom; }
 .video-card:hover img { transform: scale(1.025); }
 .video-platform { position: absolute; top: 17px; left: 18px; right: 18px; display: flex; justify-content: space-between; color: #fff; font-size: 11px; z-index: 1; }
 .play { position: absolute; bottom: 18px; left: 18px; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #fff9; border-radius: 50%; font-size: 12px; padding-left: 2px; color: #fff; background: #0009; z-index: 1; }
@@ -160,7 +163,6 @@ select { padding-right: 25px; }
   .portrait img { height: 340px; }
   .bylines { align-items: start; flex-direction: column; gap: 20px; }
   .bylines > div { width: 100%; max-width: none; }
-  .section-intro { gap: 45px; }
   .video-grid { gap: 20px; }
   .video-caption h3 { font-size: 22px; }
   .partnership { gap: 40px; padding: 30px; }
@@ -194,9 +196,10 @@ select { padding-right: 25px; }
   .bylines a:last-child { font-size: 23px; }
   .work-section { padding: 20px 0 45px; }
   .section-label { margin-bottom: 27px; }
-  .section-intro { grid-template-columns: 1fr; gap: 22px; margin-bottom: 28px; }
+  .section-heading { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+  .section-title { font-size: 16px; }
+  .video-intro { font-size: 13px; margin-bottom: 24px; }
   h2 { font-size: 39px; letter-spacing: -1.3px; }
-  .section-intro > div { font-size: 13px; padding-top: 0; }
   .inline-links { gap: 22px; margin-top: 16px; }
   .video-grid { grid-template-columns: repeat(3, 77%); gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 2px; padding: 5px 2px 20px; margin: -5px -2px 0; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
   .video-card { scroll-snap-align: start; }

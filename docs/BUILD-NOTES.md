@@ -25,9 +25,9 @@ Reviewed the existing site; Alex’s SZD editorial and business workspaces, incl
 
 Verified as published through Buffer `get_post`, including original platform links and matching thumbnail assets, October 28, 2026:
 
-- [Hawaiʻi–Northern Illinois](https://www.instagram.com/reel/De11HmyS_Ns/) — October 23. The site does not claim the original video is unsponsored.
 - [Wake Forest–Cal](https://www.instagram.com/reel/Dej1MmVjrfu/) — October 16.
 - [Chase × Split Zone Duo: budgeting college football fandom](https://www.instagram.com/reel/DePa5mAyfqV/) — October 8. Original caption explicitly identifies `#Ad #ChasePartner`.
+- [The wildest stat line in CFB history](https://www.instagram.com/p/Deo3oCygNqY/) — October 18. Alex selected this clip and supplied “APPRECIATING THE SPORT'S ODDITY” and the display title. Buffer confirms the matching Reel shortcode, original Army-football caption, and thumbnail.
 
 The older thumbnails and clips remain in the repository for recovery; the new page references only the verified current selections. No new use of third-party editorial photography was introduced.
 
@@ -75,3 +75,9 @@ Replaced the hero heading/bio, sponsorship paragraph, and SZD description with A
 Removed the Slate AI-icons article and made [the Oregon column](https://www.nytimes.com/athletic/7724389/2026/10/26/dan-lanning-oregon-wasted-season/) the first selection. Alex supplied the published Athletic PDF, whose first page verifies the exact headline, Alex’s byline, October 26, 2026 date, and matching URL. The PDF is source material only; it is not copied into public assets.
 
 Revised browser coverage for the fixed palette and retained keyboard-disclosure checks. The 16 browser checks and 27 backend checks all pass. The site remains local.
+
+## Video selection and section headings — October 28
+
+Alex selected Wake Forest–Cal, the Chase partnership, and the Army stat-line video, in that order. The third card uses his exact label “APPRECIATING THE SPORT'S ODDITY” and title “The wildest stat line in CFB history.” Its matching published thumbnail was verified through Buffer and saved locally.
+
+The video introduction uses Alex’s supplied paragraph beginning “I make a lot of Instagram Reels and TikToks.” Video and writing now use their uppercase section labels as the actual headings, without a second headline underneath. Social links and the commissioning link remain available. All changes remain local.
