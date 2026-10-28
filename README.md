@@ -12,21 +12,21 @@ Open [the local preview](http://127.0.0.1:8000). The October 28 working preview 
 
 ## Contact
 
-Visitors choose an inquiry type, then open an email draft in their own mail app. Optional details can be added on the site. Each type supplies a subject and relevant prompts. The visitor reviews and sends the email; the site never submits or stores the inquiry. A reveal-and-copy email option works for visitors using webmail. The no-JavaScript page includes a readable address.
+Visitors choose an inquiry type and click **Email Alex** to open their mail app with the appropriate subject. **Copy email** provides the address for visitors using webmail, with a selectable address fallback if clipboard access is unavailable. The site never submits or stores the inquiry. The no-JavaScript page includes a readable address.
 
 This reduces passive address exposure and avoids a public form-to-email endpoint. It does not promise to prevent scraping, unsolicited email, or unwanted messages sent through an email client.
 
-The existing newsletter signup remains separate, using the configured Google Apps Script deployment with server-verified Cloudflare Turnstile. See [the server setup](server/README.md).
+The mailing list signup has been removed. The page no longer loads its configuration or Turnstile widget. Existing backend files, configuration, and contract tests remain as recovery assets; the live Apps Script deployment and stored addresses have not been changed. See [the archived server setup](server/README.md).
 
 ## Files
 
-- `index.html`: content, navigation, inquiries, newsletter, and search/share metadata.
+- `index.html`: content, navigation, contact controls, and search/share metadata.
 - `styles.css`: editorial layout, responsive styles, a fixed black-and-white palette, and accessibility affordances.
-- `site.js`: local email-draft builder, and protected signup frontend.
-- `site-config.js`: public newsletter endpoint and public Turnstile key.
+- `site.js`: local email-draft builder and copy-email action.
+- `site-config.js`: dormant public newsletter configuration; not loaded by the page.
 - `assets/`: optimized live-show portrait, current video thumbnails, SZD branding, favicon, and share image.
-- `tests/signup.test.cjs`: Google Apps Script signup contract tests.
-- `tests/browser.test.cjs`: real-browser navigation, layout, contact, and signup UI tests.
+- `tests/signup.test.cjs`: retained Google Apps Script signup contract tests.
+- `tests/browser.test.cjs`: real-browser navigation, layout, and contact checks.
 - `docs/BUILD-NOTES.md`: goal, content provenance, decisions, checks, and deployment status.
 
 ## Checks
@@ -40,7 +40,7 @@ node --check tests/browser.test.cjs
 git diff --check
 ```
 
-Browser checks require Playwright and a Chromium browser in the development environment. They start and stop their own local server. They mock external services and intercept email drafts, so no signup or email is sent:
+Browser checks require Playwright and a Chromium browser in the development environment. They start and stop their own local server, block external requests, and intercept email drafts, so no email is sent:
 
 ```sh
 node --test tests/browser.test.cjs

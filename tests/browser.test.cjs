@@ -9,24 +9,6 @@ const root = path.resolve(__dirname, '..');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml' };
 let server, browser, context, page, url;
 const errors = [];
-// Cloudflare's documented compact/normal footprints keep layout checks faithful to the embed.
-// https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/
-const turnstile = `window.turnstile = {
-  render(selector, options) {
-    window.challengeOptions = options;
-    const footprint = document.createElement('div');
-    footprint.className = 'turnstile-layout-fixture';
-    footprint.style.width = options.size === 'compact' ? '150px' : '300px';
-    footprint.style.height = options.size === 'compact' ? '140px' : '65px';
-    document.querySelector(selector).append(footprint);
-    const input = document.createElement('input');
-    input.type = 'hidden'; input.name = 'cf-turnstile-response'; input.value = 'test-token';
-    document.querySelector(selector).append(input);
-    options.callback(); return 'test-widget';
-  },
-  reset() { document.querySelector('[name="cf-turnstile-response"]').value = ''; }
-}; window.onSignupTurnstileReady();`;
-
 before(async () => {
   server = http.createServer(async (req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -47,10 +29,7 @@ after(async () => {
 });
 beforeEach(async () => {
   context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'light', reducedMotion: 'reduce' });
-  await context.route('https://**/*', route => {
-    if (route.request().url().startsWith('https://challenges.cloudflare.com/')) return route.fulfill({ contentType: 'text/javascript', body: turnstile });
-    return route.abort();
-  });
+  await context.route('https://**/*', route => route.abort());
   page = await context.newPage();
   errors.length = 0;
   page.on('pageerror', error => errors.push(error.message));
@@ -84,25 +63,11 @@ test('navigation and assets work at phone, tablet, and desktop widths', async ()
   assert.deepEqual(errors, []);
 });
 
-test('sponsor and editor links select the relevant inquiry and guidance', async () => {
+test('sponsor and editor links select the relevant inquiry', async () => {
   await page.getByRole('link', { name: 'Discuss a partnership' }).click();
   assert.equal(await page.locator('#inquiry-type').inputValue(), 'partnership');
-  assert.match(await page.locator('#inquiry-hint').textContent(), /platforms/);
   await page.getByRole('link', { name: 'Commission a story' }).click();
   assert.equal(await page.locator('#inquiry-type').inputValue(), 'assignment');
-  assert.match(await page.locator('#inquiry-hint').textContent(), /deadline/);
-});
-
-test('verification widget fits inside the newsletter section on narrow phones and resize', async () => {
-  for (const width of [1440, 320, 390, 768]) {
-    await page.setViewportSize({ width, height: 1000 });
-    const fits = await page.evaluate(() => {
-      const widget = document.querySelector('.turnstile-layout-fixture').getBoundingClientRect();
-      const section = document.querySelector('.signup-section').getBoundingClientRect();
-      return widget.left >= section.left && widget.right <= section.right;
-    });
-    assert.equal(fits, true, `verification widget exceeds newsletter bounds at ${width}px`);
-  }
 });
 
 test('inquiry validation stops incomplete drafts', async () => {
@@ -111,53 +76,44 @@ test('inquiry validation stops incomplete drafts', async () => {
   assert.equal(await page.locator('#inquiry-type').evaluate(el => el.validity.valueMissing), true);
 });
 
-test('choosing only an inquiry type opens an email draft with relevant prompts', async () => {
-  await page.locator('#inquiry-type').selectOption('partnership');
-  await page.locator('#inquiry-form button[type="submit"]').click();
-  const drafts = await page.evaluate(() => window.emailDrafts);
-  assert.equal(drafts.length, 1);
-  const draft = new URL(drafts[0]);
-  assert.equal(draft.searchParams.get('subject'), 'Brand partnership inquiry');
-  assert.match(draft.searchParams.get('body'), /Campaign idea:/);
-  assert.match(draft.searchParams.get('body'), /Timing \/ budget:/);
-});
-
 for (const [type, subject] of [['partnership', 'Brand partnership inquiry'], ['assignment', 'Writing assignment inquiry'], ['other', 'Getting in touch']]) {
-  test(`${type} creates a correctly encoded email draft without a web submission`, async () => {
+  test(`${type} opens an email with the selected subject and no web submission`, async () => {
     const requests = [];
     page.on('request', request => requests.push({ url: request.url(), method: request.method() }));
     await page.locator('#inquiry-type').selectOption(type);
-    await page.locator('.inquiry-details summary').click();
-    await page.locator('#inquiry-name').fill('Sam & Jo');
-    await page.locator('#inquiry-organization').fill('A&B Studio');
-    await page.locator('#inquiry-message').fill('Let’s discuss sports & culture.\nhttps://example.com/?a=1&b=2');
-    await page.locator('#inquiry-timing').fill('November / $5,000');
-    await page.locator('#inquiry-form button[type="submit"]').click();
+    await page.getByRole('button', { name: 'Email Alex', exact: true }).click();
     const drafts = await page.evaluate(() => window.emailDrafts);
     assert.equal(drafts.length, 1);
     const draft = new URL(drafts[0]);
     assert.equal(draft.pathname, 'alex@splitzoneduo.com');
     assert.equal(draft.searchParams.get('subject'), subject);
-    assert.match(draft.searchParams.get('body'), /Sam & Jo/);
-    assert.match(draft.searchParams.get('body'), /https:\/\/example.com\/\?a=1&b=2/);
-    assert.match(draft.searchParams.get('body'), /November \/ \$5,000/);
     assert.equal(draft.searchParams.has('bcc'), false);
     assert.equal(requests.some(request => request.method === 'POST'), false);
     assert.equal(new URL(page.url()).search, '');
-    assert.equal(await page.locator('#direct-contact').isVisible(), true);
-    assert.match(await page.locator('#inquiry-status').textContent(), /If your email app didn’t open/);
-    assert.match(await page.locator('#inquiry-message').inputValue(), /Let’s discuss/);
+    assert.deepEqual(errors, []);
   });
 }
 
-test('direct email and copy failure fallback remain usable', async () => {
-  assert.equal(await page.locator('a[href^="mailto:"]').count(), 0);
-  await page.getByRole('button', { name: 'Just need my email?' }).click();
-  assert.equal(await page.locator('#direct-email').getAttribute('href'), 'mailto:alex@splitzoneduo.com');
-  assert.equal(await page.locator('#direct-email').evaluate(el => el === document.activeElement), true);
-  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(Error('Denied')) }, configurable: true }));
-  await page.getByRole('button', { name: 'Copy', exact: true }).click();
-  await page.waitForFunction(() => document.querySelector('#copy-status').textContent.includes('Select the address'));
+test('Copy email copies the address and provides quiet feedback', async () => {
+  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {
+    value: { writeText: async value => { window.copiedAddress = value; } }, configurable: true,
+  }));
+  await page.getByRole('button', { name: 'Copy email', exact: true }).click();
+  await page.waitForFunction(() => document.querySelector('#contact-status').textContent.includes('copied'));
+  assert.equal(await page.evaluate(() => window.copiedAddress), 'alex@splitzoneduo.com');
+  assert.equal(await page.locator('#contact-status').isVisible(), true);
+  assert.deepEqual(await page.evaluate(() => window.emailDrafts), []);
+});
+
+test('denied clipboard access shows a usable address fallback', async () => {
+  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {
+    value: { writeText: () => Promise.reject(Error('Denied')) }, configurable: true,
+  }));
+  await page.getByRole('button', { name: 'Copy email', exact: true }).click();
+  const address = page.locator('#contact-status a');
+  await address.waitFor({ state: 'visible' });
+  assert.equal(await address.textContent(), 'alex@splitzoneduo.com');
+  assert.equal(await address.getAttribute('href'), 'mailto:alex@splitzoneduo.com');
 });
 
 test('publication list is keyboard accessible', async () => {
@@ -181,29 +137,13 @@ test('black-and-white presentation overrides earlier light-mode preferences', as
   assert.deepEqual(errors, []);
 });
 
-test('newsletter saves through the protected endpoint and reports success', async () => {
-  let submitted;
-  await context.route('https://script.google.com/**', async route => {
-    submitted = new URLSearchParams(route.request().postData());
-    await route.fulfill({ contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ ok: true, reason: 'saved' }) });
-  });
-  await page.locator('#signup-email').fill('reader@example.com');
-  await page.getByRole('button', { name: 'Subscribe', exact: false }).click();
-  await page.waitForFunction(() => document.querySelector('#signup-status').textContent.includes('You’re on the list'));
-  assert.equal(submitted.get('email'), 'reader@example.com');
-  assert.equal(submitted.get('cf-turnstile-response'), 'test-token');
-  assert.equal(submitted.get('format'), 'json');
-  assert.equal(await page.locator('.signup-row').isVisible(), false);
-});
-
-test('newsletter failure retains the address and requires new verification', async () => {
-  await context.route('https://script.google.com/**', route => route.fulfill({ contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ ok: false, reason: 'verify_failed' }) }));
-  await page.locator('#signup-email').fill('reader@example.com');
-  await page.getByRole('button', { name: 'Subscribe', exact: false }).click();
-  await page.waitForFunction(() => document.querySelector('#signup-status').textContent.includes('didn’t go through'));
-  assert.equal(await page.locator('#signup-email').inputValue(), 'reader@example.com');
-  assert.equal(await page.locator('#signup-submit').isDisabled(), true);
-  assert.equal(await page.locator('[name="cf-turnstile-response"]').inputValue(), '');
+test('contact has no signup, optional fields, or verification widget', async () => {
+  assert.equal(await page.locator('.signup-section, #signup-form').count(), 0);
+  assert.equal(await page.getByRole('button', { name: 'Subscribe', exact: false }).count(), 0);
+  assert.equal(await page.locator('#inquiry-form select').count(), 1);
+  assert.equal(await page.locator('#inquiry-form input, #inquiry-form textarea').count(), 0);
+  assert.equal(await page.locator('#inquiry-form button').count(), 2);
+  assert.equal(await page.locator('script[src*="turnstile"], script[src*="site-config"]').count(), 0);
 });
 
 test('without JavaScript, work and a readable email contact remain available', async () => {
@@ -242,5 +182,6 @@ test('optional screenshots capture fully loaded desktop and mobile', async () =>
     for (const image of await page.locator('img').all()) { await image.scrollIntoViewIfNeeded(); await image.evaluate(el => el.decode()); }
     await page.evaluate(() => { document.querySelector('.video-grid').scrollLeft = 0; scrollTo(0, 0); });
     await page.screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `${name}.png`), fullPage: true });
+    await page.locator('#contact').screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `contact-${name}.png`) });
   }
 });

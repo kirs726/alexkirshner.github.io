@@ -14,8 +14,8 @@ This revamp supersedes the September layout and introduction recorded in this fi
 - Dated personal Instagram/TikTok views and shares, with platform and measurement-window context.
 - Six writing selections covering sports, public space, and gambling, with publication archives for broader browsing. Some display titles are shortened descriptions rather than verbatim headlines.
 - A distinct SZD section connected to both listening and partnership inquiries.
-- Inquiry type is the only required contact field. Optional details sit in a native disclosure. The email opens with a fixed subject and useful prompts, or the details the visitor supplied. Nothing is sent by the website. Direct address reveal/copy and a no-JavaScript fallback are available.
-- Existing protected newsletter backend and public configuration retained. A fixed monochrome palette, keyboard access, reduced-motion support, share metadata, and structured data included.
+- A compact Contact row with an inquiry dropdown, Email Alex button, and Copy email action. The selected type supplies the email subject; the visitor writes and sends from their mail app. Clipboard failure exposes a selectable address, and a no-JavaScript fallback is available.
+- Mailing list signup removed from the page. Existing newsletter backend and public configuration retained as dormant recovery assets. A fixed monochrome palette, keyboard access, reduced-motion support, share metadata, and structured data included.
 
 ## Content provenance
 
@@ -47,7 +47,7 @@ Queried the combined cohort and each platform separately; the totals reconcile. 
 
 The October Slate story’s publication and URL are confirmed in Alex’s freelance records. Existing writing links were retained; The Ringer’s current headline was checked and updated. GQ’s article and author page were checked publicly. Slate and The Athletic restrict automated access, so this run does not claim a fresh human review of all publisher pages. The verified YouTube handle is [@alex_kirshner](https://www.youtube.com/@alex_kirshner), confirmed by the launch records and matching Buffer channel ID.
 
-## Verification
+## Verification — original revamp
 
 - Existing backend suite: 27 tests passed before and after the work.
 - Browser suite: 16 checks passed, including responsive navigation and image loading at 320, 390, 700, 768, 1024, 1440, and 1920 pixels; no page-wide horizontal overflow. Video rail intentionally scrolls horizontally on phones.
@@ -66,7 +66,7 @@ The review identified a Turnstile-mock footprint coverage gap. A dimensionally f
 
 ## Deployment
 
-The working preview runs at http://127.0.0.1:8897. Alex explicitly requested keeping the revamp local on October 28. No branch push or PR is authorized; publication requires a subsequent instruction. Production remains on the prior site. Keep the existing `CNAME`, public signup configuration, and Cloudflare analytics token. The local preview cannot validate a real Turnstile challenge because the production widget is restricted to the production hostname.
+The working preview runs at http://127.0.0.1:8897. Alex explicitly requested keeping the revamp local on October 28. No branch push or PR is authorized; publication requires a subsequent instruction. Production remains on the prior site. Keep the existing `CNAME`, dormant public signup configuration, and Cloudflare analytics token.
 
 ## Alex’s copy and monochrome revision — October 28
 
@@ -81,3 +81,11 @@ Revised browser coverage for the fixed palette and retained keyboard-disclosure 
 Alex selected Wake Forest–Cal, the Chase partnership, and the Army stat-line video, in that order. The third card uses his exact label “APPRECIATING THE SPORT'S ODDITY” and title “The wildest stat line in CFB history.” Its matching published thumbnail was verified through Buffer and saved locally.
 
 The video introduction uses Alex’s supplied paragraph beginning “I make a lot of Instagram Reels and TikToks.” Video and writing now use their uppercase section labels as the actual headings, without a second headline underneath. Social links and the commissioning link remain available. All changes remain local.
+
+## Contact simplification — October 28
+
+At Alex’s request, removed the mailing list section, signup frontend, configuration script loading, and Turnstile widget. The backend, configuration file, and signup contract tests remain available for recovery; no remote deployment or subscriber data was changed.
+
+Replaced the two-column contact form with one Contact heading and three controls: inquiry type, Email Alex, and Copy email. Removed optional fields, duplicate email reveal, and explanatory paragraphs. The sponsorship and commissioning links still preselect the relevant inquiry. Email opens with the selected subject and no prewritten body. Copy feedback uses a quiet live status; clipboard failure shows a usable address. On phones the dropdown sits above the two actions. Also removed “Views include repeat plays.” from the audience source note as requested; the view/share figures and source dates remain.
+
+Browser coverage now matches the simpler contact flow, including all three subjects, required inquiry selection, copying, denied-clipboard fallback, responsive layout, and no-JavaScript contact. All 14 browser checks and 27 retained backend checks pass. JavaScript syntax and Git whitespace checks pass, and desktop/phone contact screenshots were visually inspected. Historical signup UI checks above describe the original revamp and are superseded by this revision. All work stays local.

@@ -113,41 +113,19 @@ h1 { font-size: clamp(70px, 11.65vw, 153px); letter-spacing: -.065em; line-heigh
 .podcast-art img { width: 100%; height: 170px; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); }
 .podcast-copy .eyebrow { color: var(--muted); margin-bottom: 13px; }
 .podcast-copy > p:not(.eyebrow) { font-size: 14px; color: var(--muted); margin-top: 20px; max-width: 500px; }
-.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
-.contact-copy > .text-link { margin-top: 28px; }
-#direct-contact { margin-top: 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 14px; }
-#direct-email { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
-#copy-email { border: 1px solid var(--line); padding: 6px 12px; background: none; font-size: 11px; }
-#copy-status { width: 100%; }
-.form-field { display: flex; flex-direction: column; margin-bottom: 18px; }
-label { font-size: 11px; font-weight: 500; margin-bottom: 7px; }
-label > span { font-weight: 400; color: var(--muted); }
-input, select, textarea { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 0; background: var(--field); color: var(--ink); padding: 11px 12px; font-size: 13px; min-height: 44px; }
-input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
-textarea { resize: vertical; }
-select { padding-right: 25px; }
-.form-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.inquiry-details { margin-bottom: 22px; }
-.inquiry-details summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 44px; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 12px; list-style: none; }
-.inquiry-details summary::-webkit-details-marker { display: none; }
-.inquiry-details summary > span { display: flex; gap: 14px; align-items: center; font-size: 10px; color: var(--muted); }
-.inquiry-details summary > span > span { font-size: 19px; }
-.inquiry-details[open] summary > span > span { transform: rotate(45deg); }
-.inquiry-details > div { padding-top: 20px; }
+.contact-section { padding-bottom: 48px; }
+.contact-layout { display: flex; align-items: flex-start; justify-content: space-between; gap: 48px; }
+.contact-layout > h2 { padding-top: 11px; }
+.contact-controls { flex: 0 1 680px; min-width: 0; }
+.inquiry-row { display: flex; align-items: center; gap: 24px; }
+.inquiry-choice { flex: 1; min-width: 0; }
+select { width: 100%; min-width: 0; min-height: 48px; border: 1px solid var(--line); border-radius: 0; background: var(--field); color: var(--ink); padding: 11px 25px 11px 12px; font-size: 13px; }
+.inquiry-row .button { gap: 20px; white-space: nowrap; }
+#copy-email { white-space: nowrap; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .small-note { font-size: 10px; line-height: 1.6; color: var(--muted); margin-top: 7px; }
-.draft-note { max-width: 390px; margin-top: 12px; }
-.signup-section { border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 100px; padding: 35px 0 45px; align-items: center; }
-.signup-section h2 { font-size: 30px; letter-spacing: -.7px; margin-top: 8px; }
-.signup-section > div > p:not(.eyebrow) { color: var(--muted); font-size: 12px; margin-top: 10px; }
-.signup-row { display: flex; }
-.signup-row input { border-right: 0; }
-.signup-row button { min-height: 44px; border: 1px solid var(--accent); background: var(--accent); color: var(--paper); padding: 10px 18px; white-space: nowrap; font-size: 12px; }
-.form-guard { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-#signup-form > label { display: block; }
-#turnstile-widget { margin-top: 10px; }
-.form-status { font-size: 12px; color: var(--muted); margin-top: 10px; }
-.form-status.is-success { color: var(--accent); }
-.signup-container a { text-decoration: underline; text-underline-offset: 3px; }
+#contact-status:empty { margin: 0; }
+#contact-status a { text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 30px 0 40px; border-top: 1px solid var(--ink); }
 .footer-identity { display: flex; flex-direction: column; gap: 5px; }
 .footer-identity > a { font: 22px/1.2 var(--serif); letter-spacing: -.6px; }
@@ -170,8 +148,6 @@ select { padding-right: 25px; }
   .story-list a { grid-template-columns: 130px 1fr 20px; gap: 20px; }
   .podcast-layout { gap: 45px; }
   .podcast-art { min-height: 260px; padding: 30px; }
-  .contact-layout, .signup-section { gap: 50px; }
-  .form-pair { grid-template-columns: 1fr; gap: 0; }
 }
 @media (max-width: 700px) {
   .wrap { width: calc(100% - 40px); }
@@ -222,11 +198,12 @@ select { padding-right: 25px; }
   .podcast-art { min-height: 240px; padding: 32px; }
   .podcast-art img { height: 145px; }
   .podcast-copy > p:not(.eyebrow) { font-size: 13px; }
-  .contact-layout { grid-template-columns: 1fr; gap: 32px; }
-  .contact-copy > .text-link { margin-top: 20px; }
-  .form-pair { grid-template-columns: 1fr 1fr; gap: 14px; }
-  input, select, textarea { font-size: 16px; }
-  .signup-section { grid-template-columns: 1fr; gap: 24px; padding: 28px 0 30px; }
+  .contact-layout { flex-direction: column; align-items: stretch; gap: 24px; }
+  .contact-layout > h2 { padding-top: 0; }
+  .contact-controls { flex-basis: auto; }
+  .inquiry-row { flex-wrap: wrap; gap: 16px 24px; }
+  .inquiry-choice { flex-basis: 100%; }
+  select { font-size: 16px; }
   .site-footer { align-items: start; flex-direction: column; gap: 20px; padding: 26px 0 30px; }
   .footer-links { gap: 20px; }
 }

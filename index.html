@@ -17,9 +17,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Alex Kirshner. Writer, podcast host, and video creator.">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="styles.css?v=20261028-3">
-  <script src="site-config.js?v=20261028-3" defer></script>
-  <script src="site.js?v=20261028-3" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261028-4">
+  <script src="site.js?v=20261028-4" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -64,7 +63,7 @@
       </div>
       <aside class="partnership" aria-labelledby="partnership-title">
         <div class="partnership-copy"><p class="eyebrow">For brands & agencies</p><h3 id="partnership-title">Social partnerships</h3><p>Interested in working together on Instagram, TikTok, or somewhere else on social media? Me too. Please reach out!</p><a class="text-link" href="#contact" data-inquiry="partnership">Discuss a partnership <span aria-hidden="true">↗</span></a></div>
-        <div class="audience"><div class="audience-stat"><strong>4.7M</strong><span>Instagram + TikTok views</span></div><div class="audience-stat"><strong>42K+</strong><span>Shares across both platforms</span></div><p class="source-note">Posts published September 28–October 27, 2026.<br>Source: Buffer, retrieved October 28. Views include repeat plays.</p></div>
+        <div class="audience"><div class="audience-stat"><strong>4.7M</strong><span>Instagram + TikTok views</span></div><div class="audience-stat"><strong>42K+</strong><span>Shares across both platforms</span></div><p class="source-note">Posts published September 28–October 27, 2026.<br>Source: Buffer, retrieved October 28.</p></div>
       </aside>
     </section>
     <section id="writing" class="work-section" aria-labelledby="writing-title">
@@ -84,20 +83,21 @@
       <div class="podcast-layout"><div class="podcast-art"><img src="assets/szd-wordmark-yellow.png" alt="Split Zone Duo" loading="lazy" width="600" height="600"></div><div class="podcast-copy"><p class="eyebrow">Co-founder & co-host</p><h2 id="podcast-title">Split Zone Duo</h2><p>Est. 2020. Along with my co-host Richard Johnson, I host a national college football podcast with thousands of paying subscribers and an audience that is very good to us. We'd love to work with you or just have you listen to an episode.</p><div class="inline-links"><a class="text-link" href="https://www.splitzoneduo.com/archive">Listen to the show <span aria-hidden="true">↗</span></a><a class="text-link" href="https://www.splitzoneduo.com/subscribe">Become a subscriber <span aria-hidden="true">↗</span></a></div></div></div>
     </section>
     <section id="contact" class="work-section contact-section" aria-labelledby="contact-title">
-      <div class="section-label"><span class="section-number">04</span><p class="eyebrow">Get in touch</p></div>
-      <div class="contact-layout"><div class="contact-copy"><h2 id="contact-title">Get in touch</h2><button id="reveal-email" class="text-link" type="button" hidden>Just need my email? <span aria-hidden="true">↗</span></button><div id="direct-contact" hidden><a id="direct-email"></a><button id="copy-email" type="button">Copy</button><span id="copy-status" class="small-note" role="status"></span></div><noscript><p>Email me at alex [at] splitzoneduo [dot] com. Include the idea and timing in your note.</p></noscript></div>
-        <form id="inquiry-form" hidden>
-          <div class="form-field"><label for="inquiry-type">I’m getting in touch about</label><select id="inquiry-type" name="type" required><option value="" disabled selected>Choose an inquiry</option><option value="partnership">A brand partnership</option><option value="assignment">A writing assignment</option><option value="other">Something else</option></select></div>
-          <details class="inquiry-details"><summary>Add a few details <span>optional <span aria-hidden="true">+</span></span></summary><div>
-            <div class="form-pair"><div class="form-field"><label for="inquiry-name">Your name</label><input id="inquiry-name" name="name" autocomplete="name" maxlength="100"></div><div class="form-field"><label for="inquiry-organization">Brand or publication</label><input id="inquiry-organization" name="organization" autocomplete="organization" maxlength="150"></div></div>
-            <div class="form-field"><label for="inquiry-message">A little about the idea</label><textarea id="inquiry-message" name="message" rows="4" maxlength="1500" aria-describedby="inquiry-hint"></textarea><p id="inquiry-hint" class="small-note">A few sentences and a relevant link are plenty.</p></div>
-            <div class="form-field"><label for="inquiry-timing">Timing & budget</label><input id="inquiry-timing" name="timing" maxlength="200" placeholder="A deadline, campaign dates, or a budget range"></div>
-          </div></details>
-          <button class="button" type="submit">Open email draft <span aria-hidden="true">↗</span></button><p class="small-note draft-note">Opens your email app with these details filled in. You review and send it. This website doesn’t collect your message.</p><p id="inquiry-status" class="small-note" role="status" aria-live="polite"></p>
-        </form>
+      <div class="contact-layout">
+        <h2 class="section-title" id="contact-title">Contact</h2>
+        <div class="contact-controls">
+          <form id="inquiry-form" hidden>
+            <div class="inquiry-row">
+              <div class="inquiry-choice"><label class="sr-only" for="inquiry-type">Inquiry type</label><select id="inquiry-type" name="type" required><option value="" disabled selected>Choose an inquiry</option><option value="partnership">A brand partnership</option><option value="assignment">A writing assignment</option><option value="other">Something else</option></select></div>
+              <button class="button" type="submit">Email Alex <span aria-hidden="true">↗</span></button>
+              <button class="text-link" id="copy-email" type="button">Copy email</button>
+            </div>
+            <p id="contact-status" class="small-note" role="status" aria-live="polite"></p>
+          </form>
+          <noscript><p>Email me at alex [at] splitzoneduo [dot] com.</p></noscript>
+        </div>
       </div>
     </section>
-    <section class="signup-section" aria-labelledby="signup-title"><div><p class="eyebrow">An occasional email</p><h2 id="signup-title">Keep in touch.</h2><p>I promise to be kind to your inbox.</p></div><div class="signup-container"><form id="signup-form" method="post" hidden><label for="signup-email">Email address</label><div class="signup-row"><input id="signup-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required><button type="submit" id="signup-submit" disabled>Subscribe <span aria-hidden="true">→</span></button></div><div class="form-guard" aria-hidden="true"><label for="signup-website">Website</label><input id="signup-website" name="website" tabindex="-1" autocomplete="off"></div><div id="turnstile-widget"></div><p class="form-status" id="signup-status" role="status" aria-live="polite"></p></form><p id="signup-unavailable">Email signup needs JavaScript and verification. You can also <a href="#contact">get in touch directly</a>.</p></div></section>
   </main>
   <footer class="site-footer wrap"><div class="footer-identity"><a href="#main">Alex Kirshner</a><span>Independent. Based in Los Angeles.</span></div><div class="footer-links"><a href="https://www.instagram.com/akirshner/">Instagram ↗</a><a href="https://www.tiktok.com/@alex_kirshner">TikTok ↗</a><a href="https://www.youtube.com/@alex_kirshner">YouTube ↗</a><a href="https://bsky.app/profile/alexkirshner.com">Bluesky ↗</a></div></footer>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"215210ca1aa346b5a591f22f92af5a4d"}'></script>
