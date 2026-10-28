@@ -46,13 +46,30 @@ beforeEach(async () => {
 afterEach(async () => { await context.close(); });
 
 test('navigation and assets work at phone, tablet, and desktop widths', async () => {
-  for (const width of [320, 390, 700, 768, 1024, 1440, 1920]) {
+  for (const width of [320, 360, 390, 430, 700, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     assert.equal(overflow, false, `page overflow at ${width}px`);
     for (const link of await page.locator('nav a').all()) {
       await link.click();
       assert.equal(new URL(page.url()).hash, await link.getAttribute('href'));
+    }
+    if (width <= 700) {
+      const layout = await page.evaluate(() => ({
+        controls: [...document.querySelectorAll('nav a, .hero-actions a, #inquiry-form button, #inquiry-type, .footer-links a')].map(el => ({ text: el.textContent.trim(), height: el.getBoundingClientRect().height })),
+        navText: [...document.querySelectorAll('nav a')].map(el => {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          return { text: el.textContent.trim(), height: range.getBoundingClientRect().height };
+        }),
+        cards: [...document.querySelectorAll('.video-card')].map(el => {
+          const rect = el.getBoundingClientRect();
+          return { left: rect.left, right: rect.right };
+        }),
+      }));
+      for (const control of layout.controls) assert.ok(control.height >= 44, `small touch target for ${control.text} at ${width}px`);
+      for (const text of layout.navText) assert.ok(text.height < 25, `wrapped navigation for ${text.text} at ${width}px`);
+      for (const card of layout.cards) assert.ok(card.left >= 0 && card.right <= width, `partially hidden video at ${width}px`);
     }
   }
   for (const img of await page.locator('img').all()) {
@@ -183,5 +200,11 @@ test('optional screenshots capture fully loaded desktop and mobile', async () =>
     await page.evaluate(() => { document.querySelector('.video-grid').scrollLeft = 0; scrollTo(0, 0); });
     await page.screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `${name}.png`), fullPage: true });
     await page.locator('#contact').screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `contact-${name}.png`) });
+    if (name === 'mobile') {
+      for (const section of ['Video', 'Writing']) {
+        await page.getByRole('link', { name: section, exact: true }).click();
+        await page.screenshot({ path: path.join(process.env.SCREENSHOT_DIR, `mobile-${section.toLowerCase()}.png`) });
+      }
+    }
   }
 });
