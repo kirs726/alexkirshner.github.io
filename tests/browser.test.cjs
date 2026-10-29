@@ -93,7 +93,7 @@ test('inquiry validation stops incomplete drafts', async () => {
   assert.equal(await page.locator('#inquiry-type').evaluate(el => el.validity.valueMissing), true);
 });
 
-for (const [type, subject] of [['partnership', 'Brand partnership inquiry'], ['assignment', 'Writing assignment inquiry'], ['other', 'Getting in touch']]) {
+for (const [type, subject] of [['partnership', 'Brand partnership inquiry'], ['assignment', 'Writing assignment inquiry'], ['tip', 'A tip'], ['other', 'Getting in touch']]) {
   test(`${type} opens an email with the selected subject and no web submission`, async () => {
     const requests = [];
     page.on('request', request => requests.push({ url: request.url(), method: request.method() }));

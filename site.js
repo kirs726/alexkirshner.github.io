@@ -6,6 +6,7 @@
   const subjects = {
     partnership: 'Brand partnership inquiry',
     assignment: 'Writing assignment inquiry',
+    tip: 'A tip',
     other: 'Getting in touch',
   };
 
