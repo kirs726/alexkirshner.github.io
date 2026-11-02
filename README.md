@@ -50,4 +50,4 @@ Set `NODE_PATH` to an existing Playwright package directory if needed. Set `BROW
 
 ## Publish
 
-Merging to `main` publishes through the existing GitHub Pages setup at [alexkirshner.com](https://alexkirshner.com/). The revamp is prepared on `codex/portfolio-revamp`; Alex requested keeping the revamp local on October 28; do not push or open a PR without a subsequent request. The CNAME, analytics configuration, and live signup backend are preserved.
+Merging to `main` publishes through the existing GitHub Pages setup at [alexkirshner.com](https://alexkirshner.com/). Alex approved publishing the revamp on November 2, 2026, superseding the earlier local-only instruction. Subsequent edits should be checked on a feature branch before merging. The CNAME, analytics configuration, and dormant signup backend are preserved.

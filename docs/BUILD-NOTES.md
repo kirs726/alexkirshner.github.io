@@ -97,3 +97,7 @@ Gave phones a two-row header so the navigation stays on one line with larger tap
 Capitalized the October 2026 Slate selection as “Trump’s War on the People’s Golf Course.” Changed the Athletic entry’s visible and machine-readable dates to October 2026, matching the other writing selections; the source article’s exact publication date remains documented above.
 
 All 14 browser checks pass across nine widths from 320px to 1920px. The responsive check now verifies mobile tap-target height, single-line navigation, and complete video cards within the viewport. Visually inspected narrow-phone navigation, video rows, writing, podcast/contact spacing, and the tablet transition. Updated local screenshots are in ignored `output/previews/`. Nothing was pushed or published.
+
+## Publication approval — November 2, 2026
+
+Alex requested pushing the new site live, superseding the October 28 local-only restriction. GitHub Pages is configured to publish the root of `main` to `https://alexkirshner.com/`, with HTTPS enforced. The complete checked revision includes the mobile pass and the “A tip” inquiry option. All 15 browser checks and 27 retained backend checks pass before publication; browser coverage includes nine widths from 320px to 1920px. The October 28 audience snapshot remains explicitly dated. The CNAME, analytics configuration, and dormant signup service are unchanged.
